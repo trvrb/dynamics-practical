@@ -16,13 +16,13 @@ These operations left 7870 sequences.
 
 IRD labels sequences with country of sampling.
 However, we need things more coarsely grained than this, and so I've tagged each sequence based on 9 geographic regions.
-This tagging results in the following distribution of sequence counts:
+This tagging results in the following distribution of sequence counts: NorthAmerica (2767), China (1185), JapanKorea (1178), Oceania (845), SoutheastAsia (725), Europe (480), CentralAsia (339), Africa (215), SouthAmerica (117).
 
-| NorthAmerica | JapanKorea | China | SoutheastAsia | Oceania | CentralAsia | Europe | Africa | SouthAmerica |
-| ---          | ---        | ---   | ---           | ---     | ---         | ---    | ---    | ---          |
-| 2759         | 855        | 791   | 539           | 338     | 331         | 326    | 205    | 115          |
+It's clear that these counts are biased between regions (and also biased towards the present).
+Because we're interested in spatiotemporal patterns, we want a more equitable distribution in space and time.
 
-`NorthAmerica 2759`, `JapanKorea 855`, `China 791`, `SoutheastAsia 539`, `Oceania 338`, `CentralAsia 331`, `Europe 326`, `Africa 205`, `SouthAmerica 115`.
+Consequently, I've prepared three datasets by subsampling this full dataset:
 
-Unfortunately, these sequences are strongly biased towards particular regions and towards the present.
-Because we're interested in spatiotemporal patterns, we want a more equitable distribution in space and time, and so I subsampled the sequences.
+- `h3_usa.fasta` contains
+- `h3_world.fasta` has 5 samples per year per region giving a distribution of NorthAmerica (65), JapanKorea (60), China (58), Europe (56), SoutheastAsia (50), CentralAsia (48), Oceania (47), Africa (44), SouthAmerica (44).
+
