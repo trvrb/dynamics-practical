@@ -22,15 +22,7 @@ This tagging results in the following distribution of sequence counts:
 | ---          | ---        | ---   | ---           | ---     | ---         | ---    | ---    | ---          |
 | 2759         | 855        | 791   | 539           | 338     | 331         | 326    | 205    | 115          |
 
-- NorthAmerica	2759
-- JapanKorea	855
-- China	791
-- SoutheastAsia	539
-- Oceania	338
-- CentralAsia	331
-- Europe	326
-- Africa	205
-- SouthAmerica	115
+`NorthAmerica 2759`, `JapanKorea 855`, `China 791`, `SoutheastAsia 539`, `Oceania 338`, `CentralAsia 331`, `Europe 326`, `Africa 205`, `SouthAmerica 115`.
 
 Unfortunately, these sequences are strongly biased towards particular regions and towards the present.
 Because we're interested in spatiotemporal patterns, we want a more equitable distribution in space and time, and so I subsampled the sequences.
