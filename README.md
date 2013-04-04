@@ -18,8 +18,8 @@ IRD labels sequences with country of sampling.
 However, we need things more coarsely grained than this, and so I've tagged each sequence based on 9 geographic regions.
 This tagging results in the following distribution of sequence counts:
 
-NorthAmerica | JapanKorea | China | SoutheastAsia | Oceania | CentralAsia | Europe | Africa | SouthAmerica
-2759         | 855        | 791   | 539           | 338     | 331         | 326    | 205    | 115
+| NorthAmerica | JapanKorea | China | SoutheastAsia | Oceania | CentralAsia | Europe | Africa | SouthAmerica |
+| 2759         | 855        | 791   | 539           | 338     | 331         | 326    | 205    | 115          |
 
 - NorthAmerica	2759
 - JapanKorea	855
