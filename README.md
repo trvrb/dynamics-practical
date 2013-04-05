@@ -68,6 +68,8 @@ We first need to load the sequence data.
 Click the '+' or choose 'Import Data...' from the File menu and select 'h3_china.fasta'.
 ```
 
+![beauti_partitions](images/beauti_partitions.png)
+
 This will load a data partition of 499 taxa and 1763 nucleotide sites.
 Double-clicking the partition will open a window showing the sequence alignment.
 It's good to check to make sure the alignment is in order.
@@ -120,6 +122,7 @@ Next, we need to specify a model that describes phylogenetic structure based on 
 ```
 Click on the 'Trees' panel.
 ```
+
 
 
 
