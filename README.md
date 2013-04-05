@@ -45,7 +45,11 @@ This format sidesteps any confusion that can arise from something like 05/03/200
 Also, a simple sort of dates in yyyy/mm/dd format has the advantage of giving a chronological answer.
 
 I then used [MUSCLE](http://www.drive5.com/muscle/) to align each set of sequences.
-At the end of these operations I was left with three FASTA files: `data/h3_usa.fasta`, `data/h3_china.fasta` and `data/h3_world.fasta`.
+At the end of these operations I was left with three FASTA files: 
+
+* `data/h3_usa.fasta`
+* `data/h3_china.fasta`
+* `data/h3_world.fasta`
 
 ## Preparing XML control files
 
@@ -58,6 +62,7 @@ Open BEAUti
 ```
 
 This will show a window detailing data and analyses with the 'Partitions' panel open.
+We first need to load the sequence data.
 
 ```
 Click the '+' or choose 'Import Data...' from the File menu and select 'h3_china.fasta'.
@@ -67,16 +72,54 @@ This will load a data partition of 499 taxa and 1763 nucleotide sites.
 Double-clicking the partition will open a window showing the sequence alignment.
 It's good to check to make sure the alignment is in order.
 
+We next label each taxon with its sampling date.
 
+```
+Click on the 'Tips' panel, select 'Use tip dates' and click on 'Guess Dates'.
+```
 
+We need to tell BEAUti where to find the tip dates in the taxon names.
+Here each taxon name ends with its date of sampling separated by an underscore.
 
+```
+Select 'Defined by a prefix and its order'.
+Select 'Order' equals 'last' and input '_' for 'Prefix'.
+Select 'Parse as calendar date'.
+```
 
+This will result in the 'Date' and 'Height' columns filing the the date forward from the past and the height of each taxon relative to the most recent taxon.
 
+```
+Click on 'Date' to resort rows.
+```
 
+It will be helpful for later to record that the most recent tip has a date of '2012.17'.
 
+Next, we need to specify a model of the process by which nucleotide sites evolve.
 
+```
+Click on the 'Sites' panel.
+```
 
+We default to a very simple model of evolution.
+This shows that we are using an 'HKY' model to parameterize evolution between nucleotides.
+This model includes a single 'kappa' parameter that specifies the rate multiplier on transitions ('A' to 'G') vs transversions ('A' to 'T').
+We are estimating base frequencies and specifying no heterogeneity across nucleotide sites in the alignment.
+Generally speaking, if internal branches on the tree are long then a more complex evolutionary model will be needed to capture the real branch lengths, while if internal branches are short, then inferences will be fairly robust to model choice.
 
+Next, we need to specify a molecular clock to convert between sequence substitutions and time.
+
+```
+Click on the 'Clocks' panel.
+```
+
+We default to a strict molecular clock in which sequence substitution occur at some estimated rate per year.
+
+Next, we need to specify a model that describes phylogenetic structure based on some underlying demographic processs.
+
+```
+Click on the 'Trees' panel.
+```
 
 
 
