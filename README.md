@@ -80,6 +80,8 @@ We next label each taxon with its sampling date.
 Click on the 'Tips' panel, select 'Use tip dates' and click on 'Guess Dates'.
 ```
 
+![beauti_tips](images/beauti_tips.png)
+
 We need to tell BEAUti where to find the tip dates in the taxon names.
 Here each taxon name ends with its date of sampling separated by an underscore.
 
