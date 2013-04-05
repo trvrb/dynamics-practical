@@ -8,8 +8,8 @@ Here, we will attempt to determine global patterns of virus transmission from av
 
 This practical is designed to recapitulate some of the main results of the following two papers:
 
-* [Rambaut et al. 2008. The genomic and epidemiological dynamics of human influenza A virus. Nature.](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2441973/)
-* [Bedford et al. 2010. Global migration dynamics underlie evolution and persistence of human influenza A (H3N2). PLoS Pathogens.](http://www.plospathogens.org/article/info%3Adoi%2F10.1371%2Fjournal.ppat.1000918)
+* [Rambaut et al. 2008. The genomic and epidemiological dynamics of human influenza A virus. Nature 453: 615-619.](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2441973/)
+* [Bedford et al. 2010. Global migration dynamics underlie evolution and persistence of human influenza A (H3N2). PLoS Pathogens 6: e1000918.](http://www.plospathogens.org/article/info%3Adoi%2F10.1371%2Fjournal.ppat.1000918)
 
 ## Required software
 
@@ -41,12 +41,11 @@ BEAST accepts either [NEXUS](http://en.wikipedia.org/wiki/Nexus_file) or [FASTA]
 Metadata about location and date of sampling can be kept as separate tab-delimited files, however, I find it easier to keep sequence names tagged with metadata, i.e. `A/Malaysia/1755590/2007_CY118946_SoutheastAsia_2007-03-30` where underscores are used to separate fields.
 As an aside, IRD supplies dates in USA mm/dd/yyyy format.
 I find it much preferable to use yyyy/mm/dd format and have changed the date format of these sequences accordingly.
-This format side steps any confusion that can arise from something like 05/03/2008 (is this 5 March or 3 May?).
+This format sidesteps any confusion that can arise from something like 05/03/2008 (is this 5 March or 3 May?).
 Also, a simple sort of dates in yyyy/mm/dd format has the advantage of giving a chronological answer.
 
 I then used [MUSCLE](http://www.drive5.com/muscle/) to align each set of sequences.
-
-At the end of these operations I was left with three FASTA files: `data/h3_usa.fasta`, `data/h3_china.fasta`, `data/h3_world.fasta`.
+At the end of these operations I was left with three FASTA files: `data/h3_usa.fasta`, `data/h3_china.fasta` and `data/h3_world.fasta`.
 
 ## Preparing XML control files
 
@@ -58,14 +57,15 @@ However, to make things easier, BEAST is supplied with the companion program BEA
 Open BEAUti
 ```
 
-This will show a window detailing data and analyses with the `Partitions` panel open.
+This will show a window detailing data and analyses with the 'Partitions' panel open.
 
 ```
-Click the + or choose Import Data... from the File menu and select h3_china.fasta.
+Click the '+' or choose 'Import Data...' from the File menu and select 'h3_china.fasta'.
 ```
 
 This will load a data partition of 499 taxa and 1763 nucleotide sites.
-Double-clicking the partition will open a window showing the sequence alignment; this is good to check to make sure the alignment is in order.
+Double-clicking the partition will open a window showing the sequence alignment.
+It's good to check to make sure the alignment is in order.
 
 
 
