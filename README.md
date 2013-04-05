@@ -45,11 +45,8 @@ This format sidesteps any confusion that can arise from something like 05/03/200
 Also, a simple sort of dates in yyyy/mm/dd format has the advantage of giving a chronological answer.
 
 I then used [MUSCLE](http://www.drive5.com/muscle/) to align each set of sequences.
-At the end of these operations I was left with three FASTA files: 
 
-* `data/h3_usa.fasta`
-* `data/h3_china.fasta`
-* `data/h3_world.fasta`
+At the end of these operations I was left with three FASTA files: `data/h3_usa.fasta`, `data/h3_china.fasta` and `data/h3_world.fasta`.
 
 ## Preparing XML control files
 
@@ -57,14 +54,12 @@ The program BEAST takes an XML control file that specifies sequence data, metada
 All program parameters lie in this control file.
 However, to make things easier, BEAST is supplied with the companion program BEAUti that assists in generating XML control files.
 
-```
-Open BEAUti
-```
+**Open BEAUti**
 
 This will show a window detailing data and analyses with the 'Partitions' panel open.
 We first need to load the sequence data.
 
-**Click the `+` or choose `Import Data...` from the File menu and select `h3_china.fasta`**
+**Click the '+' or choose 'Import Data...' from the File menu and select 'h3_china.fasta'.**
 
 ![beauti_partitions](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_partitions.png)
 
@@ -82,23 +77,19 @@ We need to tell BEAUti where to find the tip dates in the taxon names.
 Here each taxon name ends with its date of sampling separated by an underscore.
 
 
-### Select 'Defined by a prefix and its order'.
-### Select 'Order' equals 'last' and input '_' for 'Prefix'.
-### Select 'Parse as calendar date'.
+**Select 'Defined by a prefix and its order'.**
+**Select 'Order' equals 'last' and input '_' for 'Prefix'.**
+**Select 'Parse as calendar date'.**
 
 This will result in the 'Date' and 'Height' columns filing the the date forward from the past and the height of each taxon relative to the most recent taxon.
 
-```
-Click on 'Date' to resort rows.
-```
+**Click on 'Date' to resort rows.**
 
 It will be helpful for later to record that the most recent tip has a date of '2012.17'.
 
 Next, we need to specify a model of the process by which nucleotide sites evolve.
 
-```
-Click on the 'Sites' panel.
-```
+**Click on the 'Sites' panel.**
 
 We default to a very simple model of evolution.
 This shows that we are using an 'HKY' model to parameterize evolution between nucleotides.
@@ -108,19 +99,15 @@ Generally speaking, if internal branches on the tree are long then a more comple
 
 Next, we need to specify a molecular clock to convert between sequence substitutions and time.
 
-```
-Click on the 'Clocks' panel.
-```
+**Click on the 'Clocks' panel.**
 
 We default to a strict molecular clock in which sequence substitution occur at some estimated rate per year.
 
 Next, we need to specify a model that describes phylogenetic structure based on some underlying demographic processs.
 
-```
-Click on the 'Trees' panel.
-```
+**Click on the 'Trees' panel.**
 
-Does this work?
+
 
 
 
