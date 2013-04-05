@@ -64,7 +64,7 @@ Open BEAUti
 This will show a window detailing data and analyses with the 'Partitions' panel open.
 We first need to load the sequence data.
 
-> Click the '+' or choose 'Import Data...' from the File menu and select 'h3_china.fasta'.
+### Click the '+' or choose 'Import Data...' from the File menu and select 'h3_china.fasta'.
 
 ![beauti_partitions](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_partitions.png)
 
@@ -74,7 +74,7 @@ It's good to check to make sure the alignment is in order.
 
 We next label each taxon with its sampling date.
 
-> Click on the 'Tips' panel, select 'Use tip dates' and click on 'Guess Dates'.
+### Click on the 'Tips' panel, select 'Use tip dates' and click on 'Guess Dates'.
 
 ![beauti_tips](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_tips.png)
 
@@ -82,9 +82,9 @@ We need to tell BEAUti where to find the tip dates in the taxon names.
 Here each taxon name ends with its date of sampling separated by an underscore.
 
 
-> Select 'Defined by a prefix and its order'.
-> Select 'Order' equals 'last' and input '_' for 'Prefix'.
-> Select 'Parse as calendar date'.
+### Select 'Defined by a prefix and its order'.
+### Select 'Order' equals 'last' and input '_' for 'Prefix'.
+### Select 'Parse as calendar date'.
 
 This will result in the 'Date' and 'Height' columns filing the the date forward from the past and the height of each taxon relative to the most recent taxon.
 
