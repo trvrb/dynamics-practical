@@ -61,27 +61,28 @@ We first need to load the sequence data.
 
 **Click the '+' or choose 'Import Data...' from the File menu and select 'h3_china.fasta'.**
 
-![beauti_partitions](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_partitions.png)
-
 This will load a data partition of 499 taxa and 1763 nucleotide sites.
 Double-clicking the partition will open a window showing the sequence alignment.
 It's good to check to make sure the alignment is in order.
+
+![beauti_partitions](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_partitions.png)
 
 We next label each taxon with its sampling date.
 
 **Click on the 'Tips' panel, select 'Use tip dates' and click on 'Guess Dates'.**
 
-![beauti_tips](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_tips.png)
-
 We need to tell BEAUti where to find the tip dates in the taxon names.
 Here each taxon name ends with its date of sampling separated by an underscore.
 
-
 **Select 'Defined by a prefix and its order'.**
+
 **Select 'Order' equals 'last' and input '_' for 'Prefix'.**
+
 **Select 'Parse as calendar date'.**
 
 This will result in the 'Date' and 'Height' columns filing the the date forward from the past and the height of each taxon relative to the most recent taxon.
+
+![beauti_tips](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_tips.png)
 
 **Click on 'Date' to resort rows.**
 
@@ -97,15 +98,20 @@ This model includes a single 'kappa' parameter that specifies the rate multiplie
 We are estimating base frequencies and specifying no heterogeneity across nucleotide sites in the alignment.
 Generally speaking, if internal branches on the tree are long then a more complex evolutionary model will be needed to capture the real branch lengths, while if internal branches are short, then inferences will be fairly robust to model choice.
 
+![beauti_sites](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_sites.png)
+
 Next, we need to specify a molecular clock to convert between sequence substitutions and time.
 
 **Click on the 'Clocks' panel.**
 
 We default to a strict molecular clock in which sequence substitution occur at some estimated rate per year.
 
+![beauti_clocks](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_clocks.png)
+
 Next, we need to specify a model that describes phylogenetic structure based on some underlying demographic processs.
 
 **Click on the 'Trees' panel.**
+
 
 
 
