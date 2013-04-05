@@ -68,7 +68,7 @@ We first need to load the sequence data.
 Click the '+' or choose 'Import Data...' from the File menu and select 'h3_china.fasta'.
 ```
 
-![beauti_partitions](images/beauti_partitions.png)
+![beauti_partitions](https://raw.github.com/trvrb/influenza-dynamics-practical/master/beauti_partitions.png)
 
 This will load a data partition of 499 taxa and 1763 nucleotide sites.
 Double-clicking the partition will open a window showing the sequence alignment.
@@ -80,7 +80,7 @@ We next label each taxon with its sampling date.
 Click on the 'Tips' panel, select 'Use tip dates' and click on 'Guess Dates'.
 ```
 
-![beauti_tips](images/beauti_tips.png)
+![beauti_tips](https://raw.github.com/trvrb/influenza-dynamics-practical/master/beauti_tips.png)
 
 We need to tell BEAUti where to find the tip dates in the taxon names.
 Here each taxon name ends with its date of sampling separated by an underscore.
