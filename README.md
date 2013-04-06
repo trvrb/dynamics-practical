@@ -120,5 +120,6 @@ Next, we need to specify a model that describes phylogenetic structure based on 
 Most recent China: 2012.17
 Most recent USA: 2012.97
 Most recent World: 2012.92
+Most recent pandemic: 2009.75
 
 
