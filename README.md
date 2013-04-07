@@ -275,6 +275,14 @@ A parametric model of [logistic growth](http://en.wikipedia.org/wiki/Logistic_fu
 In this model, exponential growth occurs with rate *r*, but is damped as the population size *N* approaches carrying-capicity *K*.
 The instantaneous rate of change in population size is:
 
-![eq_logistic_rate](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/eq_logistic_rate.png)
+![logistic_rate](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/logistic_rate.png)
 
-If we start with some initial population size *N<sub>0</sub>* then 
+If we start with some initial population size *N*<sub>0</sub> then we can solve for *N* at an arbitrary timepoint *t*:
+
+![logistic_n0](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/logistic_n0.png)
+
+However, because TMRCA is constantly varying over the course of the MCMC, BEAST parameterizes logistic growth not in terms of *N*<sub>0</sub>, but instead in terms of *t*<sub>50</sub>, that is the time back from the "present" (in this case 2009.75) when the population is at half its carrying capacity:
+
+![logistic_t50](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/logistic_t50.png)
+
+Thus, to model logistic growth, we need to estimate *r*, *K* and *t*<sub>50</sub>.
