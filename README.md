@@ -40,7 +40,7 @@ Also, a simple sort of dates in yyyy-mm-dd format has the advantage of giving a 
 I then used [MUSCLE](http://www.drive5.com/muscle/) to align each set of sequences and trimmed the ends of alignments to remove uncertain sites.
 The final aligned dataset is found is `data/pandemic.fasta`.
 
-## Prepare an evolutionary analysis with a skyline demographic function
+## Prepare a skyline analysis
 
 The program BEAST takes an XML control file that specifies sequence data, metadata and also details the analysis to be run.
 All program parameters lie in this control file.
@@ -56,7 +56,7 @@ We first need to load the sequence data.
 
 This will load a data partition of 499 taxa and 1763 nucleotide sites.
 
-![beauti_partitions](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_partitions.png)
+![beauti_partitions](images/beauti_partitions.png)
 
 Double-clicking the partition will open a window showing the sequence alignment.
 It's good to check to make sure the alignment is in order.
@@ -74,11 +74,11 @@ Here each taxon name ends with its date of sampling separated by an underscore.
 
 **Select 'Parse as calendar date'.**
 
-![beauti_tips_guess_dates](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_tips_guess_dates.png)
+![beauti_tips_guess_dates](images/beauti_tips_guess_dates.png)
 
 This will result in the 'Date' and 'Height' columns filing the the date forward from the past and the height of each taxon relative to the most recent taxon.
 
-![beauti_tips](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_tips.png)
+![beauti_tips](images/beauti_tips.png)
 
 **Click on 'Date' to resort rows.**
 
@@ -94,7 +94,7 @@ This model includes a single 'kappa' parameter that specifies the rate multiplie
 We are estimating base frequencies and specifying no heterogeneity across nucleotide sites in the alignment.
 Generally speaking, if internal branches on the tree are long then a more complex evolutionary model will be needed to capture the real branch lengths, while if internal branches are short, then inferences will be fairly robust to model choice.
 
-![beauti_sites](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_sites.png)
+![beauti_sites](images/beauti_sites.png)
 
 Next, we need to specify a molecular clock to convert between sequence substitutions and time.
 
@@ -102,7 +102,7 @@ Next, we need to specify a molecular clock to convert between sequence substitut
 
 We default to a strict molecular clock in which sequence substitution occur at some estimated rate per year.
 
-![beauti_clocks](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_clocks.png)
+![beauti_clocks](images/beauti_clocks.png)
 
 Next, we need to specify a model that describes phylogenetic structure based on some underlying demographic processs.
 
@@ -117,7 +117,7 @@ We begin by choosing a simple non-parametric model.
 This model assumes a fixed number of windows, where within each effective population size is constant and there is some weak autocorrelation assumed between windows to smooth the estimates.
 We begin with the default 10 windows ('Number of groups'), and start with a random initial tree.
 
-![beauti_trees_skyline](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_trees_skyline.png)
+![beauti_trees_skyline](images/beauti_trees_skyline.png)
 
 Generally, these non-parametric skyline (and skyride) models offer flexibility for the data to say what it wants to say.
 However, these complex models suffer from the [bias-variance tradeoff](http://scott.fortmann-roe.com/docs/BiasVariance.html) and often give wide bounds of uncertainty to the resulting estimates.
@@ -130,7 +130,7 @@ Next, we need to specify priors for each parameter in the model.
 For the most part, BEAST has very sensible default priors.
 In this case, we can leave most of the parameters at their default values.
 
-![beauti_priors](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_priors.png)
+![beauti_priors](images/beauti_priors.png)
 
 However, we are forced to choose a prior for evolutionary rate.
 
@@ -148,7 +148,7 @@ We include this an initial value to aid convergence.
 
 **Enter 0.005 as an 'Initial value'.**
 
-![beauti_priors_uniform](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_priors_uniform.png)
+![beauti_priors_uniform](images/beauti_priors_uniform.png)
 
 After setting this, the 'clock.rate' prior no longer shows as red.
 
@@ -160,7 +160,7 @@ The exact choice of MCMC proposals will have no effect on eventual outcomes.
 However, good proposals will make the MCMC more efficient and poor proposals will lead to MCMC inefficiency and longer run times.
 In this case, we can stick with the default list of operators.
 
-![beauti_operators](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_operators.png)
+![beauti_operators](images/beauti_operators.png)
 
 Next, we need to specify how often and where MCMC samples are logged to.
 
@@ -231,7 +231,7 @@ This XML file contains all the information that BEAST requires.
 By default, BEAST will have 'Allow overwriting of log files' turned off, so that you can't accidently overwrite a previous run's output.
 However, you'll often need to check this box to allow overwriting when there are previous log files in the same directory that should be overwritten.
 
-![beast_skyline](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beast_skyline.png)
+![beast_skyline](images/beast_skyline.png)
 
 Also, BEAGLE is turned off by default.
 BEAGLE is an additional Java library that contains high-performance code to compute evolutionary likelihoods on phylogenetic trees.
@@ -252,7 +252,7 @@ In this case, it took a single cluster node 16 hours to compute the 50 million M
 
 I've included the resulting log file and tree file in the practical as `output/pandemic_skyline.log` and `output/pandemic_skyline.trees`.
 
-## Analyze output of the skyline analysis
+## Analyze the skyline output
 
 Here, we begin by looking at estimated parameter values from the skyline analysis.
 
@@ -268,7 +268,7 @@ The simplest way to do this is to look at MCMC state through time.
 
 **Select 'posterior' from the list of 'Traces' and select the 'Trace' panel on the right.**
 
-## Prepare an evolutionary analysis with a logistic growth demographic function
+## Prepare a logistic growth analysis
 
 We saw that the skyline analysis suggested that virus population size started off very small near the beginning of 2009 and increased throughout the year, though slowing down closer to Sep 2009.
 A parametric model of [logistic growth](http://en.wikipedia.org/wiki/Logistic_function#In_ecology:_modeling_population_growth) fits this pattern nicely.
