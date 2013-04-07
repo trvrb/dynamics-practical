@@ -40,11 +40,12 @@ Also, a simple sort of dates in yyyy-mm-dd format has the advantage of giving a 
 I then used [MUSCLE](http://www.drive5.com/muscle/) to align each set of sequences and trimmed the ends of alignments to remove uncertain sites.
 The final aligned dataset is found is `data/pandemic.fasta`.
 
-## Prepare a 'skyline' evolutionary analysis
+## Prepare an evolutionary analysis with a skyline demographic function
 
 The program BEAST takes an XML control file that specifies sequence data, metadata and also details the analysis to be run.
 All program parameters lie in this control file.
 However, to make things easier, BEAST is distributed with the companion program BEAUti that assists in generating XML control files.
+Here, we will generate an XML that specifies a 'skyline' analysis, in which we estimate changes virus population size through time.
 
 **Open BEAUti.**
 
@@ -219,7 +220,7 @@ This fine-tuning of the XML can be quite helpful and there are many, more advanc
 
 I've included this XML with the practical as `xml/pandemic_skyline.xml`.
 
-## Run the 'skyline' analysis
+## Run the skyline analysis
 
 This XML file contains all the information that BEAST requires.
 
@@ -246,10 +247,34 @@ These two parameters often give a good idea of whether the MCMC appears to be be
 Additionally, the files `pandemic_skyline.log` and `pandemic_skyline.trees` will start to fill with MCMC samples.
 
 Unfortunately, BEAST runs can take quite a long time, and it's not always clear how long they need to run.
+Because of these time requirements, I almost never run BEAST analyses locally, prefering instead to get the XML up and running and tested locally and then running BEAST on a cluster node to perform the full analysis.
 In this case, it took a single cluster node 16 hours to compute the 50 million MCMC steps, resulting in 2001 samples being logged and a 48 MB trees file.
 
 I've included the resulting log file and tree file in the practical as `output/pandemic_skyline.log` and `output/pandemic_skyline.trees`.
 
-## Analyze output of the 'skyline' analysis
+## Analyze output of the skyline analysis
+
+Here, we begin by looking at estimated parameter values from the skyline analysis.
+
+**Open Tracer.**
+
+Tracer is designed to take a tab-delimited file specifying parameter values with each line representing a separate MCMC sample.
+
+**Click '+' and select 'pandemic_skyline.log' from the resulting dialog.**
+
+This displays each parameter as a separate element in the 'Traces' list.
+First off, we need to assess whether the MCMC has converged to its stationary distribution.
+The simplest way to do this is to look at MCMC state through time.
+
+**Select 'posterior' from the list of 'Traces' and select the 'Trace' panel on the right.**
+
+## Prepare an evolutionary analysis with a logistic growth demographic function
+
+We saw that the skyline analysis suggested that virus population size started off very small near the beginning of 2009 and increased throughout the year, though slowing down closer to Sep 2009.
+A parametric model of [logistic growth](http://en.wikipedia.org/wiki/Logistic_function#In_ecology:_modeling_population_growth) fits this pattern nicely.
+In this model, exponential growth occurs with rate *r*, but is damped as the population size *N* approaches carrying-capicity *K*.
+The instantaneous rate of change in population size is:
+
+![eq_logistic_rate](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/eq_logistic_rate.png)
 
 
