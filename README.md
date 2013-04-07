@@ -380,4 +380,19 @@ Doubling time (days) | 17.48 | 23.78 | 38.04
 
 Additionally, with knowledge of the serial interval between infections we can convert the growth rate in terms of years into an estimate of the fundemental reproductive number *R*<sub>0</sub>.
 If we convert growth rate *r* into days, we get a mean estimate of 0.029 per day.
-From basic [SIR dynamics](http://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology) we expect the per day rate of increase to be equal to the per-day contact rate &beta; minus the per day recovery rate &gamma;
+From basic [SIR dynamics](http://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology) we expect the per day rate of increase to be equal to the per-day contact rate *&beta;* minus the per day recovery rate *&gamma;*.
+Thus, we can solve for *&beta;* = *r* + *&gamma;*.
+In this case, we can assume a 3 day duration of infection and *&gamma;* = 0.333 per day.
+Thus, we can estimate *&beta;* = 0.029 + 0.333 = 0.362 per day.
+By definition *R*<sub>0</sub> = *&beta;* / *&gamma;* = 0.362 / 0.333 = 1.09.
+
+These estimates of viral population size are not in units of individual, but instead in the same units as the phylogeny and thus years.
+Population size in BEAST is really population size *N*<sub>e</sub> multiplied by the generation time *&tau;* in years.
+Early in the epidemic, when the fraction susceptible is close to 1, we expect *&tau;* = 1 / (2 *&beta;*).
+In this case, we estimate generation time early in the epidemic as *&tau;* = 1 / (2 * 0.362) = 1.38 days or 0.0038 years.
+Thus, we can divide estimates of population size from BEAST by 0.0038 years to get an estimate of the number of individuals.
+At the beginning of July, the logistic model estimates *N*<sub>e</sub> *&tau;* = 14.47 and thus predicts *N*<sub>e</sub> = 3809 individuals.
+At the same time, the skyline model estimates a similar of individuals.
+
+Differences between census population size *N* and effective population size *N*<sub>e</sub> can be quite large, and can be generally explained by a large variance in the reproductive success of individual infections.
+If the progeny of some infections are much more successful than the progeny of other infections in terms of eventual genetic legacy, there will be a large difference between *N* and *N*<sub>e</sub>.
