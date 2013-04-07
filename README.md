@@ -9,6 +9,7 @@ Here, we will investigate the growth of the virus population and its global spre
 ## Required software
 
 * [BEAST](http://beast.bio.ed.ac.uk/) is used to infer evolutionary dynamics from sequence data.
+* [BEAGLE](http://beast.bio.ed.ac.uk/BEAGLE) is a helper library that allows faster and more advanced functions to be run in BEAST. For this practical, it is not necessary to install CUDA drivers (step 2 in the BEAGLE installation).
 * [Tracer](http://tree.bio.ed.ac.uk/software/tracer/) is used to analyze paramater estimates from BEAST.
 * [FigTree](http://tree.bio.ed.ac.uk/software/figtree/) is used to analyze phylogeny estimates from BEAST.
 
@@ -45,7 +46,7 @@ The program BEAST takes an XML control file that specifies sequence data, metada
 All program parameters lie in this control file.
 However, to make things easier, BEAST is distributed with the companion program BEAUti that assists in generating XML control files.
 
-**Open BEAUti**
+**Open BEAUti.**
 
 This will show a window detailing data and analyses with the 'Partitions' panel open.
 We first need to load the sequence data.
@@ -169,7 +170,7 @@ I usually aim for 2000 samples, planning to throw out the first 500 or 1000 as [
 
 **Enter 50000000 (50 million) for 'Length of chain'.**
 
-**Enter 25000 for 'Echo state to screen' and 'Log parameters'.**
+**Enter 25000 for 'Log parameters'.**
 
 **Enter pandemic_skyline for 'File name stem'.**
 
@@ -191,9 +192,9 @@ Writing out these rates to the trees file will just result in an unnecessarily l
 
 **Open 'pandemic_skyline.xml' in a text editor.**
 
-XML is structured in a hierarchical fashion with logical blocks of markup surrounding by open (`<analysis>`) and close (`</analysis>`) tags.
+XML is structured in a hierarchical fashion with logical blocks of markup surrounding by open (`<block>`) and close (`</block>`) tags.
 
-**Find the XML block that specifies tree output called <logTree>.**
+**Find the XML block that specifies tree output called 'logTree'.**
 
 ```
 	<logTree id="treeFileLog" logEvery="25000" nexusFormat="true" fileName="pandemic_skyline.trees" sortTranslationTable="true">
@@ -205,7 +206,7 @@ XML is structured in a hierarchical fashion with logical blocks of markup surrou
 	</logTree>
 ```
 
-**Delete the <trait> block that contains <strictClockBranchRates>.**
+**Delete the 'trait' block that contains 'strictClockBranchRates'.**
 
 ```
 	<logTree id="treeFileLog" logEvery="25000" nexusFormat="true" fileName="pandemic_skyline.trees" sortTranslationTable="true">
@@ -216,9 +217,39 @@ XML is structured in a hierarchical fashion with logical blocks of markup surrou
 
 This fine-tuning of the XML can be quite helpful and there are many, more advanced, analyses that require editing the XML rather than relying on BEAUti output.
 
+I've included this XML with the practical as `xml/pandemic_skyline.xml`.
+
 ## Run the 'skyline' analysis
 
 This XML file contains all the information that BEAST requires.
 
+**Open BEAST.**
+
+**Click on 'Choose File...' and select 'pandemic_skyline.xml'.**
+
+By default, BEAST will have 'Allow overwriting of log files' turned off, so that you can't accidently overwrite a previous run's output.
+However, you'll often need to check this box to allow overwriting when there are previous log files in the same directory that should be overwritten.
+
+![beast_skyline](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beast_skyline.png)
+
+Also, BEAGLE is turned off by default.
+BEAGLE is an additional Java library that contains high-performance code to compute evolutionary likelihoods on phylogenetic trees.
+Most of the BEAST analyses will work on the built-in BEAST engine.
+However, some of the newer analyses will require BEAGLE.
+In this case, we can leave it unchecked or checked as desired.
+
+**Click on 'Run'.**
+
+This will start the BEAST run and the initial setup and the MCMC progress will be logged to a window.
+The TMRCA ('rootHeight') and the per-year substitution rate ('clock.rate') will be logged to this window.
+These two parameters often give a good idea of whether the MCMC appears to be behaving properly and help for monitoring convergence.
+Additionally, the files `pandemic_skyline.log` and `pandemic_skyline.trees` will start to fill with MCMC samples.
+
+Unfortunately, BEAST runs can take quite a long time, and it's not always clear how long they need to run.
+In this case, it took a single cluster node 16 hours to compute the 50 million MCMC steps, resulting in 2001 samples being logged and a 48 MB trees file.
+
+I've included the resulting log file and tree file in the practical as `output/pandemic_skyline.log` and `output/pandemic_skyline.trees`.
+
+## Analyze output of the 'skyline' analysis
 
 
