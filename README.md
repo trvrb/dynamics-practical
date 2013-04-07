@@ -323,3 +323,51 @@ We will also manually set the prior on 'logistic.t50' by replacing the 'gammaPri
 
 With this completed, we are ready to run this analysis in BEAST.
 
+## Run the logistic growth analysis
+
+**Open BEAST, select the file pandemic_logistic.xml and choose 'Run'.**
+
+This will produce the output files `pandemic_logistic.log` and `pandemic_logistic.trees`, again taking ~16 hours to complete on a single cluster node.
+
+I've included these files with the practical as `output/pandemic_logistic.log` and `output/pandemic_logistic.trees`.
+
+## Analyze the logistic growth output
+
+**Open pandemic_logistic.log in Tracer.**
+
+Here, we see that each trace is behaving well, but that we need to set the burn-in higher than the default 5 million.
+
+**Set 'Burn-in' to 10000000 (10 million).**
+
+Here, we see we get the following parameter estimates and 95% credible intervals for the logistic growth model:
+
+Parameter               | Lower | Mean  | Upper
+---                     | ---   | ---   | ----
+*K* (popSize)           | 9.49  | 48.38 | 140.49
+*r* (growthRate)        | 6.65  | 10.64 | 14.47
+*t*<sub>50</sub> (t50)  | 0.02  | 0.17  | 0.28
+
+Tracer can also be used to reconstruct population size through time according to the logistic growth model.
+
+**Choose 'Demographic Reconstruction...' from the 'Analysis' menu.**
+
+In the resulting dialog box, the demographic function chosen needs to be matched to the one actually used.
+
+**Select 'Logistic Growth (Growth Rate)' from the 'Demographic Model' dropdown.**
+
+The traces used for each of the three parameters are selected automatically.
+However, overall timescale still needs to be set.
+
+**Enter 2009.75 for 'Age of youngest tip'.**
+
+![tracer_logistic_dialog](images/tracer_logistic_dialog.png)
+
+**Click on 'OK' to perform the analysis.**
+
+The resulting window shows the median estimate of population size through time, as well as its 95% credible interval.
+
+![tracer_logistic_history](images/tracer_logistic_history.png)
+
+Here, we see that population size has grown exponentially until around July or August when it's begun to saturate.
+However, although the rate of initial exponential increase appears fairly well defined, there appears to be little certainty to the degree of recent saturation.
+
