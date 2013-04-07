@@ -12,7 +12,7 @@ Here, we will investigate the growth of the virus population and its global spre
 * [Tracer](http://tree.bio.ed.ac.uk/software/tracer/) is used to analyze paramater estimates from BEAST.
 * [FigTree](http://tree.bio.ed.ac.uk/software/figtree/) is used to analyze phylogeny estimates from BEAST.
 
-## Compiling sequence data
+## Compile sequence data
 
 I started by downloading a set of sequences of the HA segment of pandemic H1N1 influenza from the [Influenza Research Database](http://www.fludb.org) sampled during 2009.
 This gave me 8176 sequences.
@@ -39,7 +39,7 @@ Also, a simple sort of dates in yyyy-mm-dd format has the advantage of giving a 
 I then used [MUSCLE](http://www.drive5.com/muscle/) to align each set of sequences and trimmed the ends of alignments to remove uncertain sites.
 The final aligned dataset is found is `data/pandemic.fasta`.
 
-## Preparing XML control files
+## Prepare a 'skyline' evolutionary analysis
 
 The program BEAST takes an XML control file that specifies sequence data, metadata and also details the analysis to be run.
 All program parameters lie in this control file.
@@ -182,4 +182,43 @@ And that's it.  We just need to save the XML control file.
 **Select Continue when shown the priors.**
 
 **Save the XML as 'pandemic_skyline.xml'.**
+
+For the most part, BEAUti does a good job creating an XML optimized for the analysis at hand.
+However, there are often small details that need to be cleaned up by hand.
+In this case, BEAUti defaults to writing out evolutionary rates to every branch in the phylogeny.
+However, with a strict clock model, every branch will have the same rate at sampled MCMC step and this rate will already by written to the log file.
+Writing out these rates to the trees file will just result in an unnecessarily larger file.
+
+**Open 'pandemic_skyline.xml' in a text editor.**
+
+XML is structured in a hierarchical fashion with logical blocks of markup surrounding by open (`<analysis>`) and close (`</analysis>`) tags.
+
+**Find the XML block that specifies tree output called <logTree>.**
+
+```
+	<logTree id="treeFileLog" logEvery="25000" nexusFormat="true" fileName="pandemic_skyline.trees" sortTranslationTable="true">
+		<treeModel idref="treeModel"/>
+		<trait name="rate" tag="rate">
+			<strictClockBranchRates idref="branchRates"/>
+		</trait>
+		<posterior idref="posterior"/>
+	</logTree>
+```
+
+**Delete the <trait> block that contains <strictClockBranchRates>.**
+
+```
+	<logTree id="treeFileLog" logEvery="25000" nexusFormat="true" fileName="pandemic_skyline.trees" sortTranslationTable="true">
+		<treeModel idref="treeModel"/>
+		<posterior idref="posterior"/>
+	</logTree>
+```
+
+This fine-tuning of the XML can be quite helpful and there are many, more advanced, analyses that require editing the XML rather than relying on BEAUti output.
+
+## Run the 'skyline' analysis
+
+This XML file contains all the information that BEAST requires.
+
+
 
