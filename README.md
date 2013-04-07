@@ -341,11 +341,11 @@ Here, we see that each trace is behaving well, but that we need to set the burn-
 
 Here, we see we get the following parameter estimates and 95% credible intervals for the logistic growth model:
 
-                        | Lower | Mean  | Upper
----                     | ---   | ---   | ----
-*K* (popSize)           | 9.49  | 48.38 | 140.49
-*r* (growthRate)        | 6.65  | 10.64 | 14.47
-*t*<sub>50</sub> (t50)  | 0.02  | 0.17  | 0.28
+                         | Lower | Mean  | Upper
+---                      | ---   | ---   | ----
+*K* (individual years)   | 9.49  | 48.38 | 140.49
+*r* (per year)           | 6.65  | 10.64 | 14.47
+*t*<sub>50</sub> (years) | 0.02  | 0.17  | 0.28
 
 Tracer can also be used to reconstruct population size through time according to the logistic growth model.
 
@@ -373,10 +373,11 @@ However, although the rate of initial exponential increase appears fairly well d
 
 The equation log(2) / *r* can be used to calculcate the doubling time in years of virus population.
 The doubling time in days can be calculcated by multiplying this by 365.
-Additionally, with knowledge of the serial interval between infections we can convert the growth rate in terms of years into a growth rate in terms of serial intervals.
-
 
                      | Lower | Mean  | Upper
 ---                  | ---   | ---   | ----
-*r* (per year)       | 6.65  | 10.64 | 14.47
 Doubling time (days) | 17.48 | 23.78 | 38.04
+
+Additionally, with knowledge of the serial interval between infections we can convert the growth rate in terms of years into an estimate of the fundemental reproductive number *R*<sub>0</sub>.
+If we convert growth rate *r* into days, we get a mean estimate of 0.029 per day.
+From basic [SIR dynamics](http://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology) we expect the per day rate of increase to be equal to the per-day contact rate &beta; minus the per day recovery rate &gamma;
