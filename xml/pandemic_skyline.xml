@@ -3671,7 +3671,7 @@
 	<!-- The strict clock (Uniform rates across branches)                        -->
 	<strictClockBranchRates id="branchRates">
 		<rate>
-			<parameter id="clock.rate" value="1.0" lower="0.0"/>
+			<parameter id="clock.rate" value="0.005" lower="0.0" upper="1.0"/>
 		</rate>
 	</strictClockBranchRates>
 
@@ -3759,11 +3759,12 @@
 				<uniformPrior lower="0.0" upper="1.0">
 					<parameter idref="frequencies"/>
 				</uniformPrior>
-
-				<!-- Improper uniform prior: clock.rate                                      -->
-				<oneOnXPrior>
+				<uniformPrior lower="0.0" upper="1.0">
+					<parameter idref="clock.rate"/>
+				</uniformPrior>
+				<uniformPrior lower="0.0" upper="1000000.0">
 					<parameter idref="skyline.popSize"/>
-				</oneOnXPrior>
+				</uniformPrior>
 				<generalizedSkyLineLikelihood idref="skyline"/>
 				<exponentialMarkovLikelihood idref="eml1"/>
 			</prior>

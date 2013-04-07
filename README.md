@@ -277,4 +277,4 @@ The instantaneous rate of change in population size is:
 
 ![eq_logistic_rate](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/eq_logistic_rate.png)
 
-
+If we start with some initial population size *N<sub>0</sub>* then 

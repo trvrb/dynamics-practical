@@ -3768,15 +3768,18 @@
 				<uniformPrior lower="0.0" upper="1.0">
 					<parameter idref="frequencies"/>
 				</uniformPrior>
-
-				<!-- Improper uniform prior: clock.rate                                      -->
+				<uniformPrior lower="0.0" upper="1.0">
+					<parameter idref="clock.rate"/>
+				</uniformPrior>
 				<oneOnXPrior>
 					<parameter idref="logistic.popSize"/>
 				</oneOnXPrior>
 				<laplacePrior mean="0.0" scale="1.328414476727334">
 					<parameter idref="logistic.growthRate"/>
 				</laplacePrior>
-				<!-- Improper uniform prior: logistic.t50                                    -->		
+				<uniformPrior lower="0.0" upper="1.0">
+					<parameter idref="logistic.t50"/>
+				</uniformPrior>	
 				<coalescentLikelihood idref="coalescent"/>
 			</prior>
 			<likelihood id="likelihood">
