@@ -252,7 +252,7 @@ In this case, it took a single cluster node 16 hours to compute the 50 million M
 
 I've included the resulting log file and tree file in the practical as `output/pandemic_skyline.log` and `output/pandemic_skyline.trees`.
 
-## Analyze the skyline output
+## Examine the skyline output
 
 Here, we begin by looking at estimated parameter values from the skyline analysis.
 
@@ -331,7 +331,7 @@ This will produce the output files `pandemic_logistic.log` and `pandemic_logisti
 
 I've included these files with the practical as `output/pandemic_logistic.log` and `output/pandemic_logistic.trees`.
 
-## Analyze the logistic growth output
+## Examine the logistic growth output
 
 **Open pandemic_logistic.log in Tracer.**
 
@@ -341,7 +341,7 @@ Here, we see that each trace is behaving well, but that we need to set the burn-
 
 Here, we see we get the following parameter estimates and 95% credible intervals for the logistic growth model:
 
-Parameter               | Lower | Mean  | Upper
+                        | Lower | Mean  | Upper
 ---                     | ---   | ---   | ----
 *K* (popSize)           | 9.49  | 48.38 | 140.49
 *r* (growthRate)        | 6.65  | 10.64 | 14.47
@@ -371,3 +371,12 @@ The resulting window shows the median estimate of population size through time, 
 Here, we see that population size has grown exponentially until around July or August when it's begun to saturate.
 However, although the rate of initial exponential increase appears fairly well defined, there appears to be little certainty to the degree of recent saturation.
 
+The equation log(2) / *r* can be used to calculcate the doubling time in years of virus population.
+The doubling time in days can be calculcated by multiplying this by 365.
+Additionally, with knowledge of the serial interval between infections we can convert the growth rate in terms of years into a growth rate in terms of serial intervals.
+
+
+                     | Lower | Mean  | Upper
+---                  | ---   | ---   | ----
+*r* (per year)       | 6.65  | 10.64 | 14.47
+Doubling time (days) | 17.48 | 23.78 | 38.04
