@@ -396,3 +396,84 @@ At the same time, the skyline model estimates a similar of individuals.
 
 Differences between census population size *N* and effective population size *N*<sub>e</sub> can be quite large, and can be generally explained by a large variance in the reproductive success of individual infections.
 If the progeny of some infections are much more successful than the progeny of other infections in terms of eventual genetic legacy, there will be a large difference between *N* and *N*<sub>e</sub>.
+
+## Prepare a phylogeographic analysis
+
+Here, let's keep the exact same model of logistic growth as before.
+
+**Open BEAUti and rebuild the logistic growth analysis.**
+
+We next need to load the geographic metadata into BEAUti.
+
+**Select the 'Traits' panel and click on the 'Add trait' button.**
+
+**In the resulting dialog 'Create a new trait' named location.**
+
+![beauti_traits_create](images/beauti_traits_create.png)
+
+Similar to tip dates, we will import trait values from taxon names.
+
+**Click on 'Guess trait values' and choose 'second from last' in the 'Defined by its order' dropdown.**
+
+**Enter _ as the delimiter.**
+
+![beauti_traits_guess](images/beauti_traits_guess.png)
+
+Doing so results in a discrete trait being accociated with each taxon.
+
+![beauti_traits](images/beauti_traits.png)
+
+We next need to give a model for how each discrete location transitions to other locations.
+
+**Select the 'Sites' panel and click on 'location' in the left-hand list of data partitions.**
+
+We will use a 'Symmetric substitution model' where the rate that A goes to B equals the rate that B goes to A.
+Although the assymemtric model seems like it should better match reality, using it adds significant parameter complexity and additionally sacrifices a fair degree of robustness to sampling particulars.
+
+**Select 'Infer social network with BSSVS'.**
+
+I have no idea why this is labeled as "infer social network".
+BSSVS stands for Bayesian Stochastic Search Variable Selection.
+It adds an indicator variable for each pairwise transition rate that specifies whether the rate is on or off, i.e. at its estimated value or at 0.
+Including these indicators serve to decrease the effective number of rate parameters that need to be estimated and are helpful when trying to infer a sparse transition matrix.
+
+![beauti_sites_geo](images/beauti_sites_geo.png)
+
+As with the sequence partition, we also need to include a model of how geographic transition rate relates to time.
+
+**Select the 'Clocks' panel.**
+
+We will stick with the default 'Strict clock' for transitions among geographic locations.
+
+**Select the 'Trees' panel.**
+
+We don't need to do anything here, because the sequences and the geographic locations are based on the same underlying evolutionary tree.
+
+**Select the 'States' panel click on 'location' in the left-hand list of data partitions.**
+
+In addition to reconstructing states at all ancestors, we are particularly interested in where in the world the pandemic emerged.
+
+**Select 'Reconstruct states' at 'Tree Root'.**
+
+![beauti_states_geo](images/beauti_states_geo.png)
+
+As before, we need to include priors on parameters associated with the phylogeographic model.
+
+**Select the 'Priors' panel.**
+
+We need to give a prior to the overall geographic transition rate.
+
+**Select the 'location.clock.rate' prior and choose 'Exponential' from the dropdown.**
+
+We will leave mean and initial value set to 1.0.
+
+![beauti_priors_exp](images/beauti_priors_exp.png)
+
+We will leave the proposals at their defaults.
+
+**Select the 'MCMC' panel, set the length of the chain to 50000000, set logging of parameters every 25000 steps and set the file name stem to pandemic_logistic_geo.**
+
+This will save parameters and trees to `pandemic_logistic_geo.log` and `pandemic_logistic_geo.trees`.
+
+**Save the analysis as pandemic_logistic_geo.xml.**
+
