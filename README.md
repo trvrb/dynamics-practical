@@ -303,4 +303,23 @@ This will setup a demographic function based on the above outlined logistic grow
 The use of a Gamma prior for 'logistic.t50' is rather strange and exists as a holdover from a previous parameterization using a shape parameter to define timescale rather than 'logistic.t50'.
 We'll fix this by editing the raw XML later.
 
-**Select the 'MCMC' panel, set the length of the chain to 50000000
+**Select the 'MCMC' panel, set the length of the chain to 50000000, set logging of parameters every 25000 steps and set the file name stem to pandemic_logistic.**
+
+This will log parameters and trees to `pandemic_logistic.log` and `pandemic_logistic.trees`.
+
+![beauti_mcmc_logistic](images/beauti_mcmc_logistic.png)
+
+**Save the XML file as pandemic_logistic.xml.**
+
+**Open the resulting file in text editor and delete the 'trait' block from the the 'logTree' block as before.**
+
+We will also manually set the prior on 'logistic.t50' by replacing the 'gammaPrior' with:
+
+```
+	<uniformPrior lower="0.0" upper="1.0">
+		<parameter idref="logistic.t50"/>
+	</uniformPrior>	
+```
+
+With this completed, we are ready to run this analysis in BEAST.
+
