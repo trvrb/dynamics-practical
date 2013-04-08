@@ -2,8 +2,8 @@
 
 ## Introduction
 
-In 2009, a [variant of influenza H1N1](http://en.wikipedia.org/wiki/Pandemic_H1N1/09_virus) emerged from a reassortant of bird, swine and human flu viruses, with surface proteins HA and NA of swine origin.
-Owing to a lack of previous immunity to these proteins in the human population, this virus spread rapidly through the human population, causing a worldwide [pandemic](http://en.wikipedia.org/wiki/2009_flu_pandemic).
+In 2009, a [variant of influenza H1N1](http://en.wikipedia.org/wiki/Pandemic_H1N1/09_virus) emerged through reassortment of bird, swine and human flu viruses, with surface proteins HA and NA of swine origin.
+Owing to a lack of previous immunity to these proteins, this virus spread rapidly through the human population, causing a worldwide [pandemic](http://en.wikipedia.org/wiki/2009_flu_pandemic).
 Here, we will investigate the growth of the virus population and its global spread using publicly available sequence data.
 
 ## Required software
@@ -46,30 +46,26 @@ I sampled at most 10 sequences per month per region from the beginning of 2009 t
 This resulted in a total of 514 sequences with the following distribution: USACanada (91), Europe (90), SoutheastAsia (80), China (82), JapanKorea (80), CentralAsia (74), SouthAmerica (58), Mexico (61), CentralAmerica (62), Africa (54), Oceania (33).
 
 BEAST accepts either [NEXUS](http://en.wikipedia.org/wiki/Nexus_file) or [FASTA](http://en.wikipedia.org/wiki/FASTA_format) format for sequence data.
-Metadata about location and date of sampling can be kept as separate tab-delimited files, however, I find it easier to keep sequence names tagged with metadata, i.e. `A/Shenzhen/40/2009_China_2009-06-09` where underscores are used to separate fields.
-As an aside, IRD supplies dates in USA mm/dd/yyyy format.
-I find it much preferable to use yyyy-mm-dd format and so changed the date format of these sequences accordingly.
-This format sidesteps any confusion that can arise from something like 05/03/2009 (is this 5 March or 3 May?).
-Also, a simple sort of dates in yyyy-mm-dd format has the advantage of giving a chronological answer.
+Metadata about location and date of sampling can be kept as separate tab-delimited files, however, I find it easier to incorporate metadata into sequence names, i.e. `A/Shenzhen/40/2009_China_2009-06-09` where underscores are used to separate fields.
 
 I then used [MUSCLE](http://www.drive5.com/muscle/) to align each set of sequences and trimmed the ends of alignments to remove uncertain sites.
-The final aligned dataset is found is `data/pandemic.fasta`.
+I've included the final aligned dataset as `data/pandemic.fasta`.
 
 ## Prepare a skyline analysis
 
 The program BEAST takes an XML control file that specifies sequence data, metadata and also details the analysis to be run.
 All program parameters lie in this control file.
-However, to make things easier, BEAST is distributed with the companion program BEAUti that assists in generating XML control files.
-Here, we will generate an XML that specifies a 'skyline' analysis, in which we estimate changes virus population size through time.
+However, to make things easier, BEAST is distributed with the companion program BEAUti that assists in generating the XML.
+Here, we will produce an XML that specifies a 'skyline' analysis, in which we estimate changes virus population size through time.
 
 **Open BEAUti.**
 
-This will show a window detailing data and analyses with the 'Partitions' panel open.
+This will show a window with the 'Partitions' panel open.
 We first need to load the sequence data.
 
-**Click on the '+' or choose 'Import Data...' from the File menu and select 'h3_china.fasta'.**
+**Click on the '+' or choose 'Import Data...' from the File menu and select `pandemic.fasta`.**
 
-This will load a data partition of 499 taxa and 1763 nucleotide sites.
+This will load a data partition of 514 taxa and 1664 nucleotide sites.
 
 ![beauti_partitions](images/beauti_partitions.png)
 
@@ -81,11 +77,11 @@ We next label each taxon with its sampling date.
 **Select the 'Tips' panel, select 'Use tip dates' and click on 'Guess Dates'.**
 
 We need to tell BEAUti where to find the tip dates in the taxon names.
-Here each taxon name ends with its date of sampling separated by an underscore.
+Here, each taxon name ends with its date of sampling separated by an underscore.
 
 **Select 'Defined by a prefix and its order'.**
 
-**Select 'Order' equals 'last' and input '_' for 'Prefix'.**
+**Select 'Order' equals 'last' and input `_` for 'Prefix'.**
 
 **Select 'Parse as calendar date'.**
 
@@ -95,9 +91,9 @@ This will result in the 'Date' and 'Height' columns filing the the date forward 
 
 ![beauti_tips](images/beauti_tips.png)
 
-**Click on 'Date' to resort rows.**
+**Click on 'Date' to sort rows.**
 
-It will be helpful for later to record that the most recent tip has a date of '2009.75'.
+It will be helpful for later to record that the most recent tip has a date of `2009.75`.
 
 Next, we need to specify a model of the process by which nucleotide sites evolve.
 
@@ -184,11 +180,11 @@ Next, we need to specify how often and where MCMC samples are logged to.
 Generally, larger datasets will require longer chains and less frequent sampling.
 I usually aim for 2000 samples, planning to throw out the first 500 or 1000 as [burn-in](http://en.wikipedia.org/wiki/Burn-in).
 
-**Enter 50000000 (50 million) for 'Length of chain'.**
+**Enter `50000000` (50 million) for 'Length of chain'.**
 
-**Enter 25000 for 'Log parameters'.**
+**Enter `25000` for 'Log parameters'.**
 
-**Enter pandemic_skyline for 'File name stem'.**
+**Enter `pandemic_skyline` for 'File name stem'.**
 
 This will result in 2000 samples logged to the files `pandemic_skyline.log` and `pandemic_skyline.trees`.
 
