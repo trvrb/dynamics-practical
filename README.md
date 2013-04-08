@@ -12,6 +12,7 @@ Here, we will investigate the growth of the virus population and its global spre
 * [BEAGLE](http://beast.bio.ed.ac.uk/BEAGLE) is a helper library that allows faster and more advanced functions to be run in BEAST. For this practical, it is not necessary to install CUDA drivers (step 2 in the BEAGLE installation).
 * [Tracer](http://tree.bio.ed.ac.uk/software/tracer/) is used to analyze paramater estimates from BEAST.
 * [FigTree](http://tree.bio.ed.ac.uk/software/figtree/) is used to analyze phylogeny estimates from BEAST.
+* [Google Earth](http://www.google.com/earth/) is used to display phylogeographic reconstructions.
 
 ## Sections
 
@@ -389,7 +390,7 @@ This will log parameters and trees to `pandemic_logistic.log` and `pandemic_logi
 
 **Save the XML file as pandemic_logistic.xml.**
 
-**Open the resulting file in text editor and delete the 'trait' block from the the 'logTree' block as before.**
+**Open the resulting file in a text editor and delete the 'trait' block from the the 'logTree' block as before.**
 
 We will also manually set the prior on 'logistic.t50' by replacing the 'gammaPrior' with:
 
@@ -555,6 +556,29 @@ This will save parameters and trees to `pandemic_geo.log` and `pandemic_geo.tree
 
 **Save the analysis as pandemic_geo.xml.**
 
+It will be helpful to edit the XML to give more interpretable logging.
+
+**Open pandemic_geo.xml in a text editor and delete the strictClockBranchRates traits blocks from the the 'logTree' block as before.**
+
+**Replace the gammaPrior with a uniform prior for 'logistic.t50' as before.**
+
+```
+	<uniformPrior lower="0.0" upper="1.0">
+		<parameter idref="logistic.t50"/>
+	</uniformPrior>	
+```
+
+Replace names of log files with `pandemic_geo.root` and `pandemic_geo.rates`.
+
+Replace the output in 'pandemic_geo.locationrateMatrixLog' with more interpretable estimates of indicators multiplied by rate values.
+These are stored in 'location.actualRates'.
+
+```
+		<log id="pandemic_geo.locationrateMatrixLog" logEvery="25000" fileName="pandemic_geo.rates">
+			<statistic idref="location.actualRates"/>
+		</log>
+```
+
 I've included this file with the practical as `pandemic_geo.xml`
 
 ## Run the phylogeographic analysis
@@ -571,12 +595,94 @@ Generally, I turn on SSE as this should give a decent speed increase and set the
 
 **Click on 'Run'.**
 
-This will produce the output files `pandemic_geo.log` and `pandemic_geo.trees`.
+This will produce the output files `pandemic_geo.log`, `pandemic_geo.rates`, `pandemic_geo.root` and `pandemic_geo.trees`.
 This analysis took ~24 hours to complete on a single cluster node.
 
-I've included these files with the practical as `output/pandemic_geo.log` and `output/pandemic_geo.trees`.
+I've included these files with the practical in the `output/` directory.
 
 ## Examine the phylogeographic output
 
 **Open pandemic_geo.log in Tracer and increase 'Burn-in' to 10000000 (10 million).**
 
+Here, we are first confirming that the MCMC chain has converged and appears to be behaving properly.
+The overall rate that one geographic location transitions to another location is measured by 'location.clock.rate'.
+
+                                      | Lower | Mean | Upper
+---                                   | ---   | ---  | ----
+Geographic transition rate (per year) | 3.86  | 5.45  | 6.91
+
+```
+	java -jar ../scripts/phylogeo.jar -coordinates ../data/locs.txt -annotation location -mrsd 2009.75 -radius 50000 pandemic_geo.mcc pandemic_geo.kml
+```
+
+
+The MCMC samples of pairwise rates are stored in `pandemic_geo.rates`.
+
+**Open pandemic_geo.rates in Tracer and increase 'Burn-in' to 10000000 (10 million).**
+
+Looking at individual rate estimates, some are almost always off (indicator = 0) and have mean estimates near 0, while others are most often on (indicator = 1) and have mean estimates greater than 0.
+
+Unfortuantely, the format of these rates is not immediately obvious.
+The rate matrix is converted to a vector in the following fashion (using a symmetric 4x4 matrix to demonstrate):
+
+  A             | B              | C             | D
+  ---           | ---            | ---           | ---
+A -             | r<sub>1</sub>  | r<sub>2</sub> | r<sub>3</sub>
+B r<sub>1</sub> | -              | r<sub>4</sub> | r<sub>5</sub>
+C r<sub>2</sub> | r<sub>4</sub>  | -             | r<sub>6</sub>
+D r<sub>3</sub> | r<sub>5</sub>  | r<sub>6</sub> | -
+
+A symmetric 4x4 matrix has 6 rates to estimate.
+
+In our case, we can find the ordering of locations in the `pandemic_geo.xml` file in the 'generalDataType' block.
+This is:
+
+1. Africa
+2. CentralAmerica
+3. CentralAsia
+4. China
+5. Europe
+6. JapanKorea
+7. Mexico
+8. USACanada
+9. Oceania
+10. SouthAmerica
+11. SoutheastAsia
+
+Thus, rate 1 is Africa to/from CentralAmerica, etc...
+
+```
+	rates <- read.table("pandemic_geo.rates", header=TRUE, skip=2) # import table     
+	rates <- subset(rates, state>10000000)                         # burnin
+	rates <- subset(rates, select= -state)                         # remove states column
+	means <- sapply(rates, function(x) mean(as.numeric(x)) )       # calculate means
+
+	names <- c("Africa","CentralAmerica","CentralAsia","China","Europe","JapanKorea","Mexico","USACanada","Oceania","SouthAmerica","SoutheastAsia")
+	n <- 11
+
+	pairs <- c()
+	for (i in 1:n) {
+		if (i < n) {
+			for (j in (i+1):n) {
+				pair <- paste(names[i], names[j], sep="_")
+				pairs <- append(pairs, pair)
+			}
+		}
+	}
+	
+	edges <- NULL;
+	k <- 1
+	for (i in 1:n) {
+		if (i < n) {
+			for (j in (i+1):n) {
+				row <- c(names[i], names[j], as.numeric(means[k]))
+				rbind(edges,row) -> edges
+				k <- k+1
+			}
+		}
+	}	
+	
+	
+	install.packages("qgraph")
+	
+```

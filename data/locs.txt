@@ -1,0 +1,11 @@
+Africa	-1	15
+CentralAmerica	9	-80
+CentralAsia	30	70
+China	35	105
+Europe	51	9
+JapanKorea	36	138
+Mexico	23	-102
+USACanada	38	-97
+Oceania	-27	133
+SouthAmerica	-10	-55
+SoutheastAsia	1	104
