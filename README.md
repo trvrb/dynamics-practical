@@ -497,22 +497,23 @@ From basic [SIR dynamics](http://en.wikipedia.org/wiki/Compartmental_models_in_e
 Thus, we can solve for *&beta;* = *r* + *&gamma;*.
 In this case, we can assume a 3 day duration of infection and thus *&gamma;* = 0.333 per day.
 We estimate *&beta;* = 0.029 + 0.333 = 0.362 per day.
-Then, by definition *R*<sub>0</sub> = *&beta;* / *&gamma;* = 0.362 / 0.333 = 1.09.
+Then, by definition, *R*<sub>0</sub> = *&beta;* / *&gamma;* = 0.362 / 0.333 = 1.09.
 
 These estimates of viral population size are not in units of individuals, but instead in the same units as the phylogeny and thus years.
 Population size in BEAST is the inverse of the rate of coalescence and is equal to effective population size *N*<sub>e</sub> multiplied by the generation time *&tau;* in years.
-Early in the epidemic, when the fraction susceptible is close to 1, we expect *&tau;* = 1 / (2 *&beta;*).
+Early in the epidemic, when the fraction susceptible is close to 1, we expect generation time to depend only on contact rate, so that *&tau;* = 1 / (2 *&beta;*).
 In this case, we estimate generation time early in the epidemic as *&tau;* = 1 / (2 * 0.362) = 1.38 days or 0.0038 years.
 Thus, we can divide estimates of population size from BEAST by 0.0038 years to get an estimate of the number of individuals.
-At the beginning of July, the logistic model estimates *N*<sub>e</sub> *&tau;* = 14.47 and thus predicts *N*<sub>e</sub> = 3809 individuals.
-At the same time, the skyline model estimates a similar of individuals.
+At the beginning of July, the logistic model estimates *N*<sub>e</sub> *&tau;* = 14.47 and thus predicts *N*<sub>e</sub> = 3809 infected individuals.
+At the same time, the skyline model estimates a similar number of individuals.
 
 Differences between census population size *N* and effective population size *N*<sub>e</sub> can be quite large, and can be generally explained by a large variance in the reproductive success of individual infections.
 If the progeny of some infections are much more successful than the progeny of other infections in terms of eventual genetic legacy, there will be a large difference between *N* and *N*<sub>e</sub>.
+This variance could arise from a variety of sources, including super-spreading, spatial effects and natural selection.
 
 ## Prepare a phylogeographic analysis
 
-Here, let's keep the exact same model of logistic growth as before.
+Here, let's keep the same model of logistic growth as before.
 
 **Open BEAUti and rebuild the logistic growth analysis.**
 
@@ -528,7 +529,7 @@ Similar to tip dates, we will import trait values from taxon names.
 
 **Click on 'Guess trait values' and choose 'second from last' in the 'Defined by its order' dropdown.**
 
-**Enter _ as the delimiter.**
+**Enter `_` as the delimiter.**
 
 ![beauti_traits_guess](images/beauti_traits_guess.png)
 
@@ -536,7 +537,7 @@ Doing so results in a discrete trait being associated with each taxon.
 
 ![beauti_traits](images/beauti_traits.png)
 
-We next need to give a model for how each discrete location transitions to other locations.
+We next need to give a model for how each location character state transitions to other location characeter states.
 
 **Select the 'Sites' panel and click on 'location' in the left-hand list of data partitions.**
 
@@ -545,10 +546,10 @@ Although the asymmetric model seems like it should better match reality, using i
 
 **Select 'Infer social network with BSSVS'.**
 
-I have no idea why this is labeled as "infer social network".
+I have no idea why this is called "infer social network".
 BSSVS stands for Bayesian Stochastic Search Variable Selection.
 It adds an indicator variable for each pairwise transition rate that specifies whether the rate is on or off, i.e. at its estimated value or at 0.
-Including these indicators serve to decrease the effective number of rate parameters that need to be estimated and are helpful when trying to infer a sparse transition matrix.
+These indicators serve to decrease the effective number of rate parameters that need to be estimated and are helpful to include when trying to infer a sparse transition matrix.
 
 ![beauti_sites_geo](images/beauti_sites_geo.png)
 
@@ -562,7 +563,7 @@ We will stick with the default 'Strict clock' for transitions among geographic l
 
 We don't need to do anything here, because the sequences and the geographic locations are based on the same underlying evolutionary tree.
 
-**Select the 'States' panel click on 'location' in the left-hand list of data partitions.**
+**Select the 'States' panel and click on 'location' in the left-hand list of data partitions.**
 
 In addition to reconstructing states at all ancestors, we are particularly interested in where in the world the pandemic emerged.
 
@@ -570,7 +571,7 @@ In addition to reconstructing states at all ancestors, we are particularly inter
 
 ![beauti_states_geo](images/beauti_states_geo.png)
 
-As before, we need to include priors on parameters associated with the phylogeographic model.
+We need to include priors on parameters associated with the phylogeographic model.
 
 **Select the 'Priors' panel.**
 
@@ -584,15 +585,13 @@ We will leave mean and initial value set to 1.0.
 
 We will leave the proposals at their defaults.
 
-**Select the 'MCMC' panel, set the length of the chain to 50000000, set logging of parameters every 25000 steps and set the file name stem to pandemic_geo.**
+**Select the 'MCMC' panel, set the length of the chain to `50000000`, set logging of parameters every `25000` steps and set the file name stem to `pandemic_geo`.**
 
-This will save parameters and trees to `pandemic_geo.log` and `pandemic_geo.trees`.
-
-**Save the analysis as pandemic_geo.xml.**
+**Save the analysis as `pandemic_geo.xml`.**
 
 It will be helpful to edit the XML to give more interpretable logging.
 
-**Open pandemic_geo.xml in a text editor and delete the strictClockBranchRates traits blocks from the the 'logTree' block as before.**
+**Open `pandemic_geo.xml` in a text editor and delete the strictClockBranchRates traits blocks from the the 'logTree' block as before.**
 
 **Replace the gammaPrior with a uniform prior for 'logistic.t50' as before.**
 
@@ -602,8 +601,7 @@ It will be helpful to edit the XML to give more interpretable logging.
 	</uniformPrior>	
 ```
 
-Replace names of log files with `pandemic_geo.root` and `pandemic_geo.rates`.
-
+Replace the file name `pandemic_geo.location.rates.log` with `pandemic_geo.rates`.
 Replace the output in 'pandemic_geo.locationrateMatrixLog' with more interpretable estimates of indicators multiplied by rate values.
 These are stored in 'location.actualRates'.
 
@@ -613,13 +611,15 @@ These are stored in 'location.actualRates'.
 		</log>
 ```
 
+Also, replace the file name `location.states.log` with `pandemic_geo.root`.
+
 I've included this file with the practical as `pandemic_geo.xml`
 
 ## Run the phylogeographic analysis
 
-**Open BEAST and select the file pandemic_geo.xml.**
+**Open BEAST and select the file `pandemic_geo.xml`.**
 
-This analysis (because of the function to infer ancestral locations) requires that BEAGLE be loaded.
+This analysis (because of the function to infer ancestral states) requires that BEAGLE be loaded.
 
 **Select 'Use BEAGLE library if available'.**
 
@@ -636,9 +636,9 @@ I've included these files with the practical in the `output/` directory.
 
 ## Examine the phylogeographic output
 
-**Open pandemic_geo.log in Tracer and increase 'Burn-in' to 10000000 (10 million).**
+**Open `pandemic_geo.log` in Tracer and increase 'Burn-in' to `10000000` (10 million).**
 
-Here, we are first confirming that the MCMC chain has converged and appears to be behaving properly.
+Here, we first confirm that the MCMC chain has converged and appears to be behaving properly.
 The overall rate that one geographic location transitions to another location is measured by 'location.clock.rate'.
 
                                       | Lower | Mean | Upper
@@ -648,11 +648,11 @@ Geographic transition rate (per year) | 3.86  | 5.45  | 6.91
 Let's now take a look at the geo-encoded phylogeny.
 As before, we need to prepare a single MCC tree from the trees file.
 
-**Open TreeAnnotator, set 'Burnin' to 400, set 'Input file' to pandemic_geo.trees and 'Output file' to pandemic_geo.mcc.**
+**Open TreeAnnotator, set 'Burnin' to `400`, set 'Input file' to `pandemic_geo.trees` and 'Output file' to `pandemic_geo.mcc`.**
 
 This will result in the file `pandemic_geo.mcc`, which I've included in the `output/` directory for convenience.
 
-**Open FigTree and load the pandemic_geo.mcc file.**
+**Open FigTree and load the `pandemic_geo.mcc` file.**
 
 As before, we will begin by streamlining the tree a bit.
 
@@ -660,7 +660,9 @@ As before, we will begin by streamlining the tree a bit.
 
 We will annotate nodes with their geographic locations based on color.
 
-**Turn on 'Node Shapes', enter 8 as 'Max size' and 'Colour by' location.**
+**Turn on 'Node Shapes', enter `8` as 'Max size' and 'Colour by' location.**
+
+This results in nodes colored by their most likely location.
 
 **Click on 'Setup: Colour' to get a list of location colors.**
 
@@ -668,20 +670,20 @@ Elements of this list can be dragged up and down to get a more logical grouping 
 
 ![figtree_colours](images/figtree_colours.png)
 
-This results in nodes colored by their most likely location.
 Including a legend will make this more clear.
 
-**Turn on 'Legend' and choose location for 'Attribute'.**
+**Turn on 'Legend' and choose 'location' for 'Attribute'.**
 
-The resulting phylogenies shows early nodes in Mexico and the USA and from their spreading to the rest of the world.
+The resulting phylogenies shows early nodes in Mexico and the USA and from them spreading to the rest of the world.
 
 ![figtree_geo](images/figtree_geo.png)
 
 Adjustments can be made in the 'Layout' list to better see transitions between locations.
 
-In the phylogeographic reconstruction, each node can be annotated with the proportion of samples assigned to a particular location.
-The file `pandemic_geo.root` gives the root reconstruction across the MCMC.
-Here, we see the following:
+In the phylogeographic reconstruction, each node in each MCMC sample is annotated with a geographic location.
+The certainty of the geographic reconstruction can be assessed by looking the distribution of node states across the MCMC.
+The file `pandemic_geo.root` gives the reconstruction of the root node across the MCMC.
+Here, we see the following distribution:
 
                | Frequency
 ---            | ---
@@ -700,13 +702,13 @@ SoutheastAsia  | XX
 In addition, the phylogeographic reconstruction can be visualized as a spread across the globe, in a map-centric fashion, rather than the previous tree-centric visualization.
 To do this, we will run a small script on the MCC tree that will create a KML file that can be viewed in Google Earth.
 This script is called `phylogeo.jar` as is located in the `scripts/` directory.
-Additionally, this analysis requires latitude and longitude coordinates for each location in a tab-delimited file.
+This analysis requires latitude and longitude coordinates for each location in a tab-delimited file.
 I've included this as `data/locs.txt`.
 
 To run the script, open a terminal window, navigate to the `output/` directory and run the following:
 
 ```
-	java -jar ../scripts/phylogeo.jar -coordinates ../data/locs.txt -annotation location -mrsd 2009.75 pandemic_geo.mcc pandemic_geo.kml
+java -jar ../scripts/phylogeo.jar -coordinates ../data/locs.txt -annotation location -mrsd 2009.75 pandemic_geo.mcc pandemic_geo.kml
 ```
 
 This specifies the `locs.txt` coordinates file, that the geographic character state is called `location`, that the most recent tip is at `2009.75` and that the MCC tree is the file `pandemic_geo.mcc`.
