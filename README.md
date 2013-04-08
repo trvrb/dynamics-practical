@@ -305,9 +305,9 @@ However, other estimates are also consistent with the data.
 The 95% credible intervals lies between 0.53 and 0.77 years, so between 2008.98 and 2009.22.
 These estimates correspond to the following calendar dates:
 
-                    | Lower | Mean  | Upper
----                 | ---   | ---   | ----
-TMRCA | 24 Dec 2008 | 14 Feb 2009 | 22 march 2009
+      | Lower       | Mean        | Upper
+---   | ---         | ---         | ----
+TMRCA | 24 Dec 2008 | 14 Feb 2009 | 22 March 2009
 
 Because [autocorrelation](http://en.wikipedia.org/wiki/Autocorrelation) exists been samples across the MCMC chain, our estimates of means and credible intervals have more variance than would be expected from the 1600 MCMC samples.
 This inflation of variance can be estimated based on the effective sample size (ESS), which gives the number of independ samples that would give the same variance as the observed autocorrelated samples.
@@ -316,7 +316,7 @@ In this case, we can see that some parameters have very little autocorrelation, 
 However, TMRCA has substantial autocorrelation (it's difficult to adjust without adjusting parameters in the MCMC), giving it an ESS of 87.
 The error in the estimate of a mean is equal to the sample standard deviation divided by the square root of the sample size.
 In this case, Tracer gives the standard error of the mean estimate of TMRCA as 0.008, which is equal to 2.9 days.
-Thus, the true mean has about a 95% chance of lying between 9 Feb and 19 Feb.
+Thus, the true mean has a 95% chance of lying between 9 Feb and 19 Feb.
 
 **Select all 10 of the 'skyline.popSize' elements from the list of 'Traces'.**
 
