@@ -648,25 +648,77 @@ The overall rate that one geographic location transitions to another location is
 ---                                   | ---   | ---  | ----
 Geographic transition rate (per year) | 3.86  | 5.45  | 6.91
 
+Let's now take a look at the geo-encoded phylogeny.
+As before, we need to prepare a single MCC tree from the trees file.
+
+**Open TreeAnnotator, set 'Burnin' to 400, set 'Input file' to pandemic_geo.trees and 'Output file' to pandemic_geo.mcc.**
+
+This will result in the file `pandemic_geo.mcc`, which I've included in the `output/` directory for convenience.
+
+**Open FigTree and load the pandemic_geo.mcc file.**
+
+As before, we will begin by streamlining the tree a bit.
+
+**Turn off 'Tip labels' and 'Order nodes' in 'decreasing' order.**
+
+We will annotate nodes with their geographic locations based on color.
+
+**Turn on 'Node Shapes', enter 8 as 'Max size' and 'Colour by' location.**
+
+**Click on 'Setup: Colour' to get a list of location colors.**
+
+Elements of this list can be dragged up and down to get a more logical grouping of colors and locations.
+
+![figtree_colours](images/figtree_colours.png)
+
+This results in nodes colored by their most likely location.
+Including a legend will make this more clear.
+
+**Turn on 'Legend' and choose location for 'Attribute'.**
+
+The resulting phylogenies shows early nodes in Mexico and the USA and from their spreading to the rest of the world.
+
+![figtree_geo](images/figtree_geo.png)
+
+Adjustments can be made in the 'Layout' list to better see transitions between locations.
+
+In the phylogeographic reconstruction, each node can be annotated with the proportion of samples assigned to a particular location.
+The file `pandemic_geo.root` gives the root reconstruction across the MCMC.
+Here, we see the following:
+
+               | Frequency
+---            | ---
+Africa         | XX
+CentralAmerica | XX
+CentralAsia    | XX
+China          | XX
+Europe         | XX
+JapanKorea     | XX
+Mexico         | XX
+USACanada      | XX
+Oceania        | XX
+SouthAmerica   | XX
+SoutheastAsia  | XX
+
+In addition, the phylogeographic reconstruction can be visualized as a spread across the globe, in a map-centric fashion, rather than the previous tree-centric visualization.
+To do this, we will run a small script on the MCC tree that will create a KML file that can be viewed in Google Earth.
+This script is called `phylogeo.jar` as is located in the `scripts/` directory.
+Additionally, this analysis requires latitude and longitude coordinates for each location in a tab-delimited file.
+I've included this as `data/locs.txt`.
+
+To run the script, open a terminal window, navigate to the `output/` directory and run the following:
+
 ```
-	java -jar ../scripts/phylogeo.jar -coordinates ../data/locs.txt -annotation location -mrsd 2009.75 -radius 50000 pandemic_geo.mcc pandemic_geo.kml
+	java -jar ../scripts/phylogeo.jar -coordinates ../data/locs.txt -annotation location -mrsd 2009.75 pandemic_geo.mcc pandemic_geo.kml
 ```
 
+This specifies the `locs.txt` coordinates file, that the geographic character state is called `location`, that the most recent tip is at `2009.75` and that the MCC tree is the file `pandemic_geo.mcc`.
+Running this script generates the file `pandemic_geo.kml`, which I've included in the `output/` directory.
 
-The MCMC samples of pairwise rates are stored in `pandemic_geo.rates`.
+**Open Google Earth and open the pandemic_geo.kml file.**
 
-**Open pandemic_geo.rates in Tracer and increase 'Burn-in' to 10000000 (10 million).**
+This will display well-supported transitions on the globe and include their date of occurence.
 
-Looking at individual rate estimates, some are almost always off (indicator = 0) and have mean estimates near 0, while others are most often on (indicator = 1) and have mean estimates greater than 0.
+![google_earth](images/google_earth.png)
 
-Unfortunately, the format of these rates is not immediately obvious.
-The rate matrix is converted to a vector in the following fashion (using a symmetric 4x4 matrix to demonstrate):
-
-  A             | B              | C             | D
-  ---           | ---            | ---           | ---
-A -             | r<sub>1</sub>  | r<sub>2</sub> | r<sub>3</sub>
-B r<sub>1</sub> | -              | r<sub>4</sub> | r<sub>5</sub>
-C r<sub>2</sub> | r<sub>4</sub>  | -             | r<sub>6</sub>
-D r<sub>3</sub> | r<sub>5</sub>  | r<sub>6</sub> | -
-
-A symmetric 4x4 matrix has 6 rates to estimate.
+The emergence in Mexico and spread from the USA to the rest of the world can be clearly seen.
