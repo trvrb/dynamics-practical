@@ -56,7 +56,7 @@ I've included the final aligned dataset as `data/pandemic.fasta`.
 The program BEAST takes an XML control file that specifies sequence data, metadata and also details the analysis to be run.
 All program parameters lie in this control file.
 However, to make things easier, BEAST is distributed with the companion program BEAUti that assists in generating the XML.
-Here, we will produce an XML that specifies a 'skyline' analysis, in which we estimate changes virus population size through time.
+Here, we will produce an XML that specifies a "skyline" analysis, in which we estimate changes virus population size through time.
 
 **Open BEAUti.**
 
@@ -101,7 +101,7 @@ Next, we need to specify a model of the process by which nucleotide sites evolve
 
 We default to a very simple model of evolution.
 This shows that we are using an 'HKY' model to parameterize evolution between nucleotides.
-This model includes a single 'kappa' parameter that specifies the rate multiplier on transitions ('A' to 'G') vs transversions ('A' to 'T').
+This model includes a single 'kappa' parameter that specifies the rate multiplier on transitions (e.g. 'A' to 'G') vs transversions (e.g. 'A' to 'T').
 We are estimating base frequencies and specifying no heterogeneity across nucleotide sites in the alignment.
 Generally speaking, if internal branches on the tree are long then a more complex evolutionary model will be needed to capture the real branch lengths, while if internal branches are short, then inferences will be fairly robust to model choice.
 
@@ -111,7 +111,7 @@ Next, we need to specify a molecular clock to convert between sequence substitut
 
 **Select the 'Clocks' panel.**
 
-We default to a strict molecular clock in which sequence substitution occur at some estimated rate per year.
+We default to a strict molecular clock in which substitutions occur at the same rate across branches in the phylogeny.
 
 ![beauti_clocks](images/beauti_clocks.png)
 
@@ -121,25 +121,26 @@ Next, we need to specify a model that describes phylogenetic structure based on 
 
 Here, we will choose a model that describes how the virus population size changes through time.
 There are parametric models that assume some basic function (like exponential growth) and there are non-parametric models that don't make any strong assumptions about the pattern of change.
-We begin by choosing a simple non-parametric model.
+We begin by choosing a non-parametric model.
 
 **Select 'Coalescent: Bayesian Skyline' from the 'Tree Prior' dropdown.**
 
-This model assumes a fixed number of windows, where within each effective population size is constant and there is some weak autocorrelation assumed between windows to smooth the estimates.
+This model assumes a fixed number of windows, where within each window effective population size is constant and there is some weak autocorrelation between windows to smooth the estimates.
 We begin with the default 10 windows ('Number of groups'), and start with a random initial tree.
 
 ![beauti_trees_skyline](images/beauti_trees_skyline.png)
 
 Generally, these non-parametric skyline (and skyride) models offer flexibility for the data to say what it wants to say.
-However, these complex models suffer from the [bias-variance tradeoff](http://scott.fortmann-roe.com/docs/BiasVariance.html) and often give wide bounds of uncertainty to the resulting estimates.
-We will return to this in a moment.
+However, these are relatively complex models and so suffer from the [bias-variance tradeoff](http://scott.fortmann-roe.com/docs/BiasVariance.html).
+This often results in wide bounds of uncertainty to the resulting estimates.
+We will return to this issue later on.
 
 Next, we need to specify priors for each parameter in the model.
 
 **Select the 'Priors' panel.**
 
 For the most part, BEAST has very sensible default priors.
-In this case, we can leave most of the parameters at their default values.
+In this case, we can leave most of the priors at their default values.
 
 ![beauti_priors](images/beauti_priors.png)
 
@@ -148,16 +149,16 @@ However, we are forced to choose a prior for evolutionary rate.
 **Click on the prior for 'clock.rate' (currently highlighted in red).**
 
 Although including improper priors will not harm parameter estimates, it will adversely impact the ability to do model comparison, and so it is not recommended.
-Here, we still keep a uninformative prior on 'clock.rate', choosing uniform between 0 and 1.
+Here, we still keep an uninformative prior on 'clock.rate', choosing uniform between 0 and 1.
 
 **Select 'Uniform' from the 'Prior Distribution' dropdown.**
 
-**Enter 0.0 as a lower-bound and 1.0 as an upper bound.**
+**Enter `0.0` as a lower-bound and `1.0` as an upper bound.**
 
-We actually have a good expectation from knowledge of RNA virus mutation rates that 'clock.rate' should be around 0.005.
-We include this an initial value to aid convergence.
+We actually have a good expectation from knowledge of influenza mutation rates that 'clock.rate' should be near 0.005.
+We include this as an initial value to aid convergence.
 
-**Enter 0.005 as an 'Initial value'.**
+**Enter `0.005` as an 'Initial value'.**
 
 ![beauti_priors_uniform](images/beauti_priors_uniform.png)
 
@@ -190,19 +191,19 @@ This will result in 2000 samples logged to the files `pandemic_skyline.log` and 
 
 And that's it.  We just need to save the XML control file.
 
-**Click on 'Generate BEAST File...' **
+**Click on 'Generate BEAST File...'**
 
 **Select Continue when shown the priors.**
 
-**Save the XML as 'pandemic_skyline.xml'.**
+**Save the XML as `pandemic_skyline.xml`.**
 
 For the most part, BEAUti does a good job creating an XML optimized for the analysis at hand.
 However, there are often small details that need to be cleaned up by hand.
 In this case, BEAUti defaults to writing out evolutionary rates to every branch in the phylogeny.
-However, with a strict clock model, every branch will have the same rate at sampled MCMC step and this rate will already by written to the log file.
+However, with a strict clock model, every branch will have the same rate at a particular MCMC step and this rate will already by written to the log file.
 Writing out these rates to the trees file will just result in an unnecessarily larger file.
 
-**Open 'pandemic_skyline.xml' in a text editor.**
+**Open `pandemic_skyline.xml` in a text editor.**
 
 XML is structured in a hierarchical fashion with logical blocks of markup surrounding by open (`<block>`) and close (`</block>`) tags.
 
@@ -227,7 +228,7 @@ XML is structured in a hierarchical fashion with logical blocks of markup surrou
 	</logTree>
 ```
 
-This fine-tuning of the XML can be quite helpful and there are many, more advanced, analyses that require editing the XML rather than relying on BEAUti output.
+This fine-tuning of the XML can be quite helpful and there are quite a few more advanced analyses that require editing the XML rather than relying on BEAUti output.
 
 I've included this XML with the practical as `xml/pandemic_skyline.xml`.
 
@@ -237,14 +238,14 @@ This XML file contains all the information that BEAST requires.
 
 **Open BEAST.**
 
-**Click on 'Choose File...' and select 'pandemic_skyline.xml'.**
+**Click on 'Choose File...' and select `pandemic_skyline.xml`.**
 
 By default, BEAST will have 'Allow overwriting of log files' turned off, so that you can't accidentally overwrite a previous run's output.
-However, you'll often need to check this box to allow overwriting when there are previous log files in the same directory that should be overwritten.
+However, you'll often need to check this box when there are previous log files in the same directory that should be overwritten.
 
 ![beast_skyline](images/beast_skyline.png)
 
-Also, BEAGLE is turned off by default.
+BEAGLE is turned off by default.
 BEAGLE is an additional Java library that contains high-performance code to compute evolutionary likelihoods on phylogenetic trees.
 Most of the BEAST analyses will work on the built-in BEAST engine.
 However, some of the newer analyses will require BEAGLE.
@@ -252,7 +253,7 @@ In this case, we can leave it unchecked or checked as desired.
 
 **Click on 'Run'.**
 
-This will start the BEAST run and the initial setup and the MCMC progress will be logged to a window.
+This will start the BEAST run and log MCMC setup and progress to a window.
 The TMRCA ('rootHeight') and the per-year substitution rate ('clock.rate') will be logged to this window.
 These two parameters often give a good idea of whether the MCMC appears to be behaving properly and help for monitoring convergence.
 Additionally, the files `pandemic_skyline.log` and `pandemic_skyline.trees` will start to fill with MCMC samples.
@@ -269,7 +270,7 @@ Here, we begin by looking at estimated parameter values from the skyline analysi
 
 **Open Tracer.**
 
-Tracer is designed to take a tab-delimited file specifying parameter values with each line representing a separate MCMC sample.
+Tracer is designed to take a tab-delimited file in which each line represents a separate MCMC sample.
 
 **Click '+' and select 'pandemic_skyline.log' from the resulting dialog.**
 
@@ -287,31 +288,32 @@ The MCMC chain starts out in a poor configuration, but eventually converges on t
 Because of this, the initial steps in the MCMC need to be discarded as burn-in.
 Here, it looks like the default 10% or 5 million steps may not have been enough.
 
-**Enter 10000000 (10 million) into the field for 'Burn-in'.**
+**Enter `10000000` (10 million) into the field for 'Burn-in'.**
 
-It's good to check other parameters to confirm that their values appear to have burnt in as well.
+It's good to check other parameters to confirm that their values appear to have burnt-in as well.
 There are more rigorous ways to assess burn-in, but we will stick with this simple eye-ball-the-trace method for the practical.
 
 After burn-in each sample from the MCMC represents a sample from the posterior distribution of model parameters given the data.
-For instance, we can look at estimates of TMRCA through the MCMC
+For instance, we can look at estimates of TMRCA across the MCMC
 
 **Select 'treeModel.rootHeight' from the list of 'Traces' and select the 'Estimates' panel on the right.**
 
 This shows the distribution of posterior values of TMRCA.
 The mean estimate is 0.63 years back from 2009.75, so 2009.12.
 However, other estimates are also consistent with the data.
-The 95% credible intervals lies between 0.53 and 0.77 years, so between 2008.98 and 2009.22.
+The 95% credible interval lies between 0.53 and 0.77 years, so between 2008.98 and 2009.22.
 These estimates correspond to the following calendar dates:
 
       | Lower       | Mean        | Upper
 ---   | ---         | ---         | ----
 TMRCA | 24 Dec 2008 | 14 Feb 2009 | 22 March 2009
 
-Because [autocorrelation](http://en.wikipedia.org/wiki/Autocorrelation) exists been samples across the MCMC chain, our estimates of means and credible intervals have more variance than would be expected from the 1600 MCMC samples.
+Because [autocorrelation](http://en.wikipedia.org/wiki/Autocorrelation) exists between samples in the MCMC chain, our estimates of means and credible intervals have more variance than would be expected from the 1600 independent samples.
 This inflation of variance can be estimated based on the effective sample size (ESS), which gives the number of independent samples that would give the same variance as the observed autocorrelated samples.
 
 In this case, we can see that some parameters have very little autocorrelation, for instance, kappa with an ESS of 1489.
-However, TMRCA has substantial autocorrelation (it's difficult to adjust without adjusting parameters in the MCMC), giving it an ESS of 87.
+However, TMRCA has substantial autocorrelation (it's difficult to adjust TMRCA without adjusting parameters in the MCMC), giving it an ESS of 87.
+
 The error in the estimate of a mean is equal to the sample standard deviation divided by the square root of the sample size.
 In this case, Tracer gives the standard error of the mean estimate of TMRCA as 0.008, which is equal to 2.9 days.
 Thus, the true mean has a 95% chance of lying between 9 Feb and 19 Feb.
@@ -320,18 +322,18 @@ Thus, the true mean has a 95% chance of lying between 9 Feb and 19 Feb.
 
 This shows the estimated effective population size for each of the 10 windows in the skyline demographic model.
 The first window is closest to the present and the last window is furthest in the past.
-We can see that population size appears to grown from the emergence the virus in the human population through 2009.
+We can see that population size appears to increase from the emergence the virus in the human population through the course of 2009.
 
-We can have Tracer give a more detailed reconstruction of population history.
+We can also have Tracer give a more detailed reconstruction of population history.
 
 **Select 'Bayesian Skyline Reconstruction...' from the 'Analysis' menu.**
 
-**Input pandemic_skyline.trees in the 'Trees Log File' dialog.**
+**Input `pandemic_skyline.trees` in the 'Trees Log File' dialog.**
 
 By default this will give population size going backwards from the present.
 We scale time more appropriately by setting the time of the most tip.
 
-**Input 2009.75 as 'Age of youngest tip'.**
+**Input `2009.75` as 'Age of youngest tip'.**
 
 ![tracer_skyline_dialog](images/tracer_skyline_dialog.png)
 
@@ -347,17 +349,17 @@ It appears that population size initially grew rapidly, but slowed as the year p
 ## Examine the skyline tree
 
 Here, we will use FigTree to display the phylogeny from the skyline analysis.
-However, first will will want to condense the posterior sample of 1600 trees to something more manageable.
+However, first we want to condense the posterior sample of 1600 trees to something more manageable.
 For this, we will use the helper program TreeAnnotator that is distributed alongside BEAST.
 
 **Open TreeAnnotator.**
 
-Rather frustratingly, some BEAST programs use the minimum state number as burn-in, while others take a count of states to throw away.
+Rather frustratingly, some BEAST programs use the minimum state number as burn-in (here 10 million), while others take a count of states to throw away (here 400).
 TreeAnnotator takes the latter.
 
-**To burn-in the first 10 million states, enter 400 for 'Burnin'.**
+**To burn-in the first 10 million states, enter `400` for 'Burnin'.**
 
-**Enter pandemic_skyline.trees as 'Input Tree File' and enter pandemic_skyline.mcc as 'Output file'.**
+**Enter `pandemic_skyline.trees` as 'Input Tree File' and enter `pandemic_skyline.mcc` as 'Output file'.**
 
 ![treeannotator_skyline](images/treeannotator_skyline.png)
 
@@ -366,10 +368,10 @@ For convenience, I've included this file as `output/pandemic_skyline.mcc`.
 
 We can now open this MCC tree in FigTree.
 
-**Open FigTree, select 'Open...' from the 'File' menu and choose the file pandemic_skyline.mcc.**
+**Open FigTree, select 'Open...' from the 'File' menu and choose the file `pandemic_skyline.mcc`.**
 
 This displays the tree with each taxon labeled.
-We can get a better idea of the structure of the phylogeny with just a bit of tree manipulation.
+We can get a better idea of the structure of the phylogeny with a bit of tree manipulation.
 
 **Turn off 'Tip Labels' in the left-hand list.**
 
@@ -382,14 +384,14 @@ Standing genetic diversity increases through time.
 
 ## Prepare a logistic growth analysis
 
-We saw that the skyline analysis suggested that virus population size started off very small near the beginning of 2009 and increased throughout the year, though slowing down closer to Sep 2009.
+We saw that the skyline analysis suggested that virus population size started off very small near the beginning of 2009 and increased throughout the year, though slowing its rate of increase closer to Sep 2009.
 A parametric model of [logistic growth](http://en.wikipedia.org/wiki/Logistic_function#In_ecology:_modeling_population_growth) fits this pattern nicely.
 In this model, exponential growth occurs with rate *r*, but is damped as the population size *N* approaches carrying-capacity *K*.
 The instantaneous rate of change in population size is:
 
 ![logistic_rate](images/logistic_rate.png)
 
-If we start with some initial population size *N*<sub>0</sub> then we can solve for *N* at an arbitrary timepoint *t*:
+If we start with some initial population size *N*<sub>0</sub> then we can solve for *N* at an arbitrary time *t*:
 
 ![logistic_n0](images/logistic_n0.png)
 
@@ -399,8 +401,7 @@ However, because TMRCA is constantly varying over the course of the MCMC, BEAST 
 
 Thus, to model logistic growth, we need to estimate *r*, *K* and *t*<sub>50</sub>.
 
-To prepare this XML, follow the exact steps from [preparing the skyline analysis](#prepare-a-skyline-analysis).
-Here, start by importing sequence data in the 'Partitions' panel, adding tip dates in the 'Tips' panel.
+To prepare this XML, start as before, by importing sequence data in the 'Partitions' panel and adding tip dates in the 'Tips' panel.
 
 **Select the 'Trees' panel and choose 'Logistic Growth' from the 'Tree Prior' dropdown.**
 
@@ -412,16 +413,16 @@ This will setup a demographic function based on the above outlined logistic grow
 
 ![beauti_priors_logistic](images/beauti_priors_logistic.png)
 
-The use of a Gamma prior for 'logistic.t50' is rather strange and exists as a holdover from a previous parameterization using a shape parameter to define timescale rather than 'logistic.t50'.
+The use of a Gamma prior for 'logistic.t50' is rather strange and I believe exists as a holdover from a previous parameterization using a shape parameter to define timescale rather than 'logistic.t50'.
 We'll fix this by editing the raw XML later.
 
-**Select the 'MCMC' panel, set the length of the chain to 50000000, set logging of parameters every 25000 steps and set the file name stem to pandemic_logistic.**
+**Select the 'MCMC' panel, set the length of the chain to `50000000`, set logging of parameters every `25000` steps and set the file name stem to `pandemic_logistic`.**
 
 This will log parameters and trees to `pandemic_logistic.log` and `pandemic_logistic.trees`.
 
 ![beauti_mcmc_logistic](images/beauti_mcmc_logistic.png)
 
-**Save the XML file as pandemic_logistic.xml.**
+**Save the XML file as `pandemic_logistic.xml`.**
 
 **Open the resulting file in a text editor and delete the 'trait' block from the the 'logTree' block as before.**
 
@@ -437,7 +438,7 @@ With this completed, we are ready to run this analysis in BEAST.
 
 ## Run the logistic growth analysis
 
-**Open BEAST, select the file pandemic_logistic.xml and choose 'Run'.**
+**Open BEAST, select the file `pandemic_logistic.xml` and choose 'Run'.**
 
 This will produce the output files `pandemic_logistic.log` and `pandemic_logistic.trees`, again taking ~16 hours to complete on a single cluster node.
 
@@ -445,13 +446,13 @@ I've included these files with the practical as `output/pandemic_logistic.log` a
 
 ## Examine the logistic growth output
 
-**Open pandemic_logistic.log in Tracer.**
+**Open `pandemic_logistic.log` in Tracer.**
 
 Here, we see that each trace is behaving well, but that we need to set the burn-in higher than the default 5 million.
 
-**Set 'Burn-in' to 10000000 (10 million).**
+**Set 'Burn-in' to `10000000` (10 million).**
 
-Here, we see we get the following parameter estimates and 95% credible intervals for the logistic growth model:
+We get the following parameter estimates and 95% credible intervals for the logistic growth model:
 
                          | Lower | Mean  | Upper
 ---                      | ---   | ---   | ----
@@ -470,7 +471,7 @@ In the resulting dialog box, the demographic function chosen needs to be matched
 The traces used for each of the three parameters are selected automatically.
 However, overall timescale still needs to be set.
 
-**Enter 2009.75 for 'Age of youngest tip'.**
+**Enter `2009.75` for 'Age of youngest tip'.**
 
 ![tracer_logistic_dialog](images/tracer_logistic_dialog.png)
 
@@ -492,14 +493,14 @@ Doubling time (days) | 17.48 | 23.78 | 38.04
 
 Additionally, with knowledge of the serial interval between infections we can convert the growth rate in terms of years into an estimate of the fundamental reproductive number *R*<sub>0</sub>.
 If we convert growth rate *r* into days, we get a mean estimate of 0.029 per day.
-From basic [SIR dynamics](http://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology) we expect the per day rate of increase to be equal to the per-day contact rate *&beta;* minus the per day recovery rate *&gamma;*.
+From basic [SIR dynamics](http://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology) we expect the per-day rate of increase to be equal to the per-day contact rate *&beta;* minus the per-day recovery rate *&gamma;*.
 Thus, we can solve for *&beta;* = *r* + *&gamma;*.
-In this case, we can assume a 3 day duration of infection and *&gamma;* = 0.333 per day.
-Thus, we can estimate *&beta;* = 0.029 + 0.333 = 0.362 per day.
-By definition *R*<sub>0</sub> = *&beta;* / *&gamma;* = 0.362 / 0.333 = 1.09.
+In this case, we can assume a 3 day duration of infection and thus *&gamma;* = 0.333 per day.
+We estimate *&beta;* = 0.029 + 0.333 = 0.362 per day.
+Then, by definition *R*<sub>0</sub> = *&beta;* / *&gamma;* = 0.362 / 0.333 = 1.09.
 
-These estimates of viral population size are not in units of individual, but instead in the same units as the phylogeny and thus years.
-Population size in BEAST is really population size *N*<sub>e</sub> multiplied by the generation time *&tau;* in years.
+These estimates of viral population size are not in units of individuals, but instead in the same units as the phylogeny and thus years.
+Population size in BEAST is the inverse of the rate of coalescence and is equal to effective population size *N*<sub>e</sub> multiplied by the generation time *&tau;* in years.
 Early in the epidemic, when the fraction susceptible is close to 1, we expect *&tau;* = 1 / (2 *&beta;*).
 In this case, we estimate generation time early in the epidemic as *&tau;* = 1 / (2 * 0.362) = 1.38 days or 0.0038 years.
 Thus, we can divide estimates of population size from BEAST by 0.0038 years to get an estimate of the number of individuals.
