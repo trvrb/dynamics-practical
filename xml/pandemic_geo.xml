@@ -5203,7 +5203,7 @@
 			<parameter id="logistic.growthRate" value="0.0052"/>
 		</growthRate>
 		<t50>
-			<parameter id="logistic.t50" value="1.0" lower="0.0"/>
+			<parameter id="logistic.t50" value="0.5" lower="0.0"/>
 		</t50>
 	</logisticGrowth>
 
@@ -5248,7 +5248,7 @@
 	<!-- The strict clock (Uniform rates across branches)                        -->
 	<strictClockBranchRates id="pandemic.fasta.branchRates">
 		<rate>
-			<parameter id="pandemic.fasta.clock.rate" value="1.0" lower="0.0"/>
+			<parameter id="pandemic.fasta.clock.rate" value="0.005" lower="0.0"/>
 		</rate>
 	</strictClockBranchRates>
 
@@ -5392,7 +5392,7 @@
 				<parameter idref="treeModel.allInternalNodeHeights"/>
 			</down>
 		</upDownOperator>
-		<scaleOperator scaleFactor="0.75" weight="1" scaleAllIndependently="true">
+		<scaleOperator scaleFactor="0.75" weight="1">
 			<parameter idref="location.rates"/>
 		</scaleOperator>
 		<bitFlipOperator weight="1">
@@ -5401,7 +5401,7 @@
 	</operators>
 
 	<!-- Define MCMC                                                             -->
-	<mcmc id="mcmc" chainLength="50000000" autoOptimize="true" operatorAnalysis="pandemic_logistic_geo.ops">
+	<mcmc id="mcmc" chainLength="50000000" autoOptimize="true" operatorAnalysis="pandemic_geo.ops">
 		<posterior id="posterior">
 			<prior id="prior">
 				<logNormalPrior mean="1.0" stdev="1.25" offset="0.0" meanInRealSpace="false">
@@ -5410,8 +5410,9 @@
 				<uniformPrior lower="0.0" upper="1.0">
 					<parameter idref="frequencies"/>
 				</uniformPrior>
-
-				<!-- Improper uniform prior: pandemic.fasta.clock.rate                       -->
+				<uniformPrior lower="0.0" upper="1.0">
+					<parameter idref="pandemic.fasta.clock.rate"/>
+				</uniformPrior>
 				<exponentialPrior mean="1.0" offset="0.0">
 					<parameter idref="location.clock.rate"/>
 				</exponentialPrior>
@@ -5421,19 +5422,19 @@
 				<laplacePrior mean="0.0" scale="1.328414476727334">
 					<parameter idref="logistic.growthRate"/>
 				</laplacePrior>
-				<!-- Improper uniform prior: logistic.t50                      -->
+				<uniformPrior lower="0.0" upper="1.0">
+					<parameter idref="logistic.t50"/>
+				</uniformPrior>	
 				<poissonPrior mean="0.6931471805599453" offset="10.0">
 					<statistic idref="location.nonZeroRates"/>
 				</poissonPrior>
 				<uniformPrior lower="0.0" upper="1.0">
 					<parameter idref="location.frequencies"/>
 				</uniformPrior>
-				<cachedPrior>
-					<gammaPrior shape="1.0" scale="1.0" offset="0.0">
-						<parameter idref="location.rates"/>
-					</gammaPrior>
+				<exponentialPrior mean="1.0" offset="0.0">
 					<parameter idref="location.rates"/>
-				</cachedPrior>
+				</exponentialPrior>		
+			
 				<coalescentLikelihood idref="coalescent"/>
 
 				<!-- START Discrete Traits Model                                             -->
@@ -5485,7 +5486,7 @@
 		</log>
 
 		<!-- write log to file                                                       -->
-		<log id="fileLog" logEvery="25000" fileName="pandemic_logistic_geo.log" overwrite="false">
+		<log id="fileLog" logEvery="25000" fileName="pandemic_geo.log" overwrite="false">
 			<posterior idref="posterior"/>
 			<prior idref="prior"/>
 			<likelihood idref="likelihood"/>
@@ -5516,7 +5517,7 @@
 		</log>
 
 		<!-- START Discrete Traits Model                                             -->
-		<log id="pandemic_logistic_geo.locationrateMatrixLog" logEvery="25000" fileName="pandemic_logistic_geo.rates">
+		<log id="pandemic_geo.locationrateMatrixLog" logEvery="25000" fileName="pandemic_geo.rates">
 			<statistic idref="location.actualRates"/>
 		</log>
 
@@ -5524,7 +5525,7 @@
 
 
 		<!-- write tree log to file                                                  -->
-		<logTree id="treeFileLog" logEvery="25000" nexusFormat="true" fileName="pandemic_logistic_geo.trees" sortTranslationTable="true">
+		<logTree id="treeFileLog" logEvery="25000" nexusFormat="true" fileName="pandemic_geo.trees" sortTranslationTable="true">
 			<treeModel idref="treeModel"/>
 			<posterior idref="posterior"/>
 
@@ -5540,7 +5541,7 @@
 		<!-- START Ancestral state reconstruction                                    -->
 
 		<!-- Ancestral state reconstruction for: location                            -->
-		<log id="fileLog_location" logEvery="25000" fileName="pandemic_logistic_geo.root">
+		<log id="fileLog_location" logEvery="25000" fileName="pandemic_geo.root">
 			<ancestralTrait name="location" traitName="location.states">
 				<treeModel idref="treeModel"/>
 				<ancestralTreeLikelihood idref="location.treeLikelihood"/>
