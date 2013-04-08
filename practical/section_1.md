@@ -1,3 +1,6 @@
+## [Previous section](README.md)
+
+
 ## Compile sequence data
 
 I started by downloading a set of sequences of the HA segment of pandemic H1N1 influenza from the [Influenza Research Database](http://www.fludb.org) sampled during 2009.
@@ -24,3 +27,5 @@ Also, a simple sort of dates in yyyy-mm-dd format has the advantage of giving a 
 
 I then used [MUSCLE](http://www.drive5.com/muscle/) to align each set of sequences and trimmed the ends of alignments to remove uncertain sites.
 The final aligned dataset is found is `data/pandemic.fasta`.
+
+## Next Section
