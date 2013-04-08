@@ -15,7 +15,20 @@ Here, we will investigate the growth of the virus population and its global spre
 
 ## Sections
 
-1. [Compile sequence data](#compile-sequence-data)
+1. H1N1 pandemic data
+	* [Compile sequence data](#compile-sequence-data)
+2. Skyline demographic analysis
+	* [Prepare a skyline analysis](#prepare-a-skyline-analysis)
+	* [Run the skyline analysis](#run-the-skyline-analysis)
+	* [Examine the skyline output](#examine-the-skyline-output)
+3. Logistic growth demographic analysis
+	* [Prepare a logistic growth analysis](#prepare-a-logistic-growth-analysis)
+	* [Run the logistic growth analysis](#run-the-logistic-growth-analysis)
+	* [Examine the logistic growth output](#examine-the-logistic-growth-output)
+4. Phylogeographic analysis
+	* [Prepare a phylogeographic analysis](#prepare-a-phylogeographic-analysis)
+	* [Run the phylogeographic analysis](#run-the-phylogeographic-analysis)
+	* [Examine the phylogeographic output](#examine-the-phylogeographic-output)
 
 ## Compile sequence data
 
