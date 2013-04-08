@@ -699,6 +699,8 @@ Oceania        | 0%
 SouthAmerica   | 2%
 SoutheastAsia  | 1%
 
+Thus, we're quite confident in a Mexican origin of pandemic, though the USA receives a small amount of weight as well.
+
 In addition, the phylogeographic reconstruction can be visualized as a spread across the globe, in a map-centric fashion, rather than the previous tree-centric visualization.
 To do this, we will run a small script on the MCC tree that will create a KML file that can be viewed in Google Earth.
 This script is called `phylogeo.jar` as is located in the `scripts/` directory.
