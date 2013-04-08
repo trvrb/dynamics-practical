@@ -15,20 +15,16 @@ Here, we will investigate the growth of the virus population and its global spre
 
 ## Sections
 
-1. H1N1 pandemic data
-	* [Compile sequence data](#compile-sequence-data)
-2. Skyline demographic analysis
-	* [Prepare a skyline analysis](#prepare-a-skyline-analysis)
-	* [Run the skyline analysis](#run-the-skyline-analysis)
-	* [Examine the skyline output](#examine-the-skyline-output)
-3. Logistic growth demographic analysis
-	* [Prepare a logistic growth analysis](#prepare-a-logistic-growth-analysis)
-	* [Run the logistic growth analysis](#run-the-logistic-growth-analysis)
-	* [Examine the logistic growth output](#examine-the-logistic-growth-output)
-4. Phylogeographic analysis
-	* [Prepare a phylogeographic analysis](#prepare-a-phylogeographic-analysis)
-	* [Run the phylogeographic analysis](#run-the-phylogeographic-analysis)
-	* [Examine the phylogeographic output](#examine-the-phylogeographic-output)
+1. [Compile sequence data](#compile-sequence-data)
+2. [Prepare a skyline analysis](#prepare-a-skyline-analysis)
+3. [Run the skyline analysis](#run-the-skyline-analysis)
+4. [Examine the skyline output](#examine-the-skyline-output)
+5. [Prepare a logistic growth analysis](#prepare-a-logistic-growth-analysis)
+6. [Run the logistic growth analysis](#run-the-logistic-growth-analysis)
+7. [Examine the logistic growth output](#examine-the-logistic-growth-output)
+8. [Prepare a phylogeographic analysis](#prepare-a-phylogeographic-analysis)
+9. [Run the phylogeographic analysis](#run-the-phylogeographic-analysis)
+10. [Examine the phylogeographic output](#examine-the-phylogeographic-output)
 
 ## Compile sequence data
 
@@ -73,7 +69,7 @@ We first need to load the sequence data.
 
 This will load a data partition of 499 taxa and 1763 nucleotide sites.
 
-![beauti_partitions](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_partitions.png)
+![beauti_partitions](images/beauti_partitions.png)
 
 Double-clicking the partition will open a window showing the sequence alignment.
 It's good to check to make sure the alignment is in order.
@@ -91,11 +87,11 @@ Here each taxon name ends with its date of sampling separated by an underscore.
 
 **Select 'Parse as calendar date'.**
 
-![beauti_tips_guess_dates](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_tips_guess_dates.png)
+![beauti_tips_guess_dates](images/beauti_tips_guess_dates.png)
 
 This will result in the 'Date' and 'Height' columns filing the the date forward from the past and the height of each taxon relative to the most recent taxon.
 
-![beauti_tips](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_tips.png)
+![beauti_tips](images/beauti_tips.png)
 
 **Click on 'Date' to resort rows.**
 
@@ -111,7 +107,7 @@ This model includes a single 'kappa' parameter that specifies the rate multiplie
 We are estimating base frequencies and specifying no heterogeneity across nucleotide sites in the alignment.
 Generally speaking, if internal branches on the tree are long then a more complex evolutionary model will be needed to capture the real branch lengths, while if internal branches are short, then inferences will be fairly robust to model choice.
 
-![beauti_sites](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_sites.png)
+![beauti_sites](images/beauti_sites.png)
 
 Next, we need to specify a molecular clock to convert between sequence substitutions and time.
 
@@ -119,7 +115,7 @@ Next, we need to specify a molecular clock to convert between sequence substitut
 
 We default to a strict molecular clock in which sequence substitution occur at some estimated rate per year.
 
-![beauti_clocks](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_clocks.png)
+![beauti_clocks](images/beauti_clocks.png)
 
 Next, we need to specify a model that describes phylogenetic structure based on some underlying demographic processs.
 
@@ -134,7 +130,7 @@ We begin by choosing a simple non-parametric model.
 This model assumes a fixed number of windows, where within each effective population size is constant and there is some weak autocorrelation assumed between windows to smooth the estimates.
 We begin with the default 10 windows ('Number of groups'), and start with a random initial tree.
 
-![beauti_trees_skyline](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_trees_skyline.png)
+![beauti_trees_skyline](images/beauti_trees_skyline.png)
 
 Generally, these non-parametric skyline (and skyride) models offer flexibility for the data to say what it wants to say.
 However, these complex models suffer from the [bias-variance tradeoff](http://scott.fortmann-roe.com/docs/BiasVariance.html) and often give wide bounds of uncertainty to the resulting estimates.
@@ -147,7 +143,7 @@ Next, we need to specify priors for each parameter in the model.
 For the most part, BEAST has very sensible default priors.
 In this case, we can leave most of the parameters at their default values.
 
-![beauti_priors](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_priors.png)
+![beauti_priors](images/beauti_priors.png)
 
 However, we are forced to choose a prior for evolutionary rate.
 
@@ -165,7 +161,7 @@ We include this an initial value to aid convergence.
 
 **Enter 0.005 as an 'Initial value'.**
 
-![beauti_priors_uniform](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_priors_uniform.png)
+![beauti_priors_uniform](images/beauti_priors_uniform.png)
 
 After setting this, the 'clock.rate' prior no longer shows as red.
 
@@ -177,7 +173,7 @@ The exact choice of MCMC proposals will have no effect on eventual outcomes.
 However, good proposals will make the MCMC more efficient and poor proposals will lead to MCMC inefficiency and longer run times.
 In this case, we can stick with the default list of operators.
 
-![beauti_operators](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_operators.png)
+![beauti_operators](images/beauti_operators.png)
 
 Next, we need to specify how often and where MCMC samples are logged to.
 
@@ -248,7 +244,7 @@ This XML file contains all the information that BEAST requires.
 By default, BEAST will have 'Allow overwriting of log files' turned off, so that you can't accidently overwrite a previous run's output.
 However, you'll often need to check this box to allow overwriting when there are previous log files in the same directory that should be overwritten.
 
-![beast_skyline](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beast_skyline.png)
+![beast_skyline](images/beast_skyline.png)
 
 Also, BEAGLE is turned off by default.
 BEAGLE is an additional Java library that contains high-performance code to compute evolutionary likelihoods on phylogenetic trees.
@@ -285,6 +281,71 @@ The simplest way to do this is to look at MCMC state through time.
 
 **Select 'posterior' from the list of 'Traces' and select the 'Trace' panel on the right.**
 
+This shows the posterior log probability of the model given the data for each step in the MCMC chain.
+
+![tracer_posterior](images/tracer_posterior.png)
+
+The MCMC chain starts out in a poor configuration, but eventually converges on the correct stationary distribution.
+Because of this, the initial steps in the MCMC need to be discarded as burn-in.
+Here, it looks like the default 10% or 5 million steps may not have been enough.
+
+**Enter 10000000 (10 million) into the field for 'Burn-in'.**
+
+It's good to check other parameters to confirm that their values appear to have burnt in as well.
+There are more rigorous ways to assess burn-in, but we will stick with this simple eye-ball-the-trace method for the practical.
+
+After burn-in each sample from the MCMC represents a sample from the posterior distribution of model parameters given the data.
+For instance, we can look at estimates of TMRCA through the MCMC
+
+**Select 'treeModel.rootHeight' from the list of 'Traces' and select the 'Estimates' panel on the right.**
+
+This shows the distribution of posterior values of TMRCA.
+The mean estimate is 0.63 years back from 2009.75, so 2009.12.
+However, other estimates are also consistent with the data.
+The 95% credible intervals lies between 0.53 and 0.77 years, so between 2008.98 and 2009.22.
+These estimates correspond to the following calendar dates:
+
+                    | Lower | Mean  | Upper
+---                 | ---   | ---   | ----
+TMRCA | 24 Dec 2008 | 14 Feb 2009 | 22 march 2009
+
+Because [autocorrelation](http://en.wikipedia.org/wiki/Autocorrelation) exists been samples across the MCMC chain, our estimates of means and credible intervals have more variance than would be expected from the 1600 MCMC samples.
+This inflation of variance can be estimated based on the effective sample size (ESS), which gives the number of independ samples that would give the same variance as the observed autocorrelated samples.
+
+In this case, we can see that some parameters have very little autocorrelation, for instance, kappa with an ESS of 1489.
+However, TMRCA has substantial autocorrelation (it's difficult to adjust without adjusting parameters in the MCMC), giving it an ESS of 87.
+The error in the estimate of a mean is equal to the sample standard deviation divided by the square root of the sample size.
+In this case, Tracer gives the standard error of the mean estimate of TMRCA as 0.008, which is equal to 2.9 days.
+Thus, the true mean has about a 95% chance of lying between 9 Feb and 19 Feb.
+
+**Select all 10 of the 'skyline.popSize' elements from the list of 'Traces'.**
+
+This shows the estimated effective population size for each of the 10 windows in the skyline demographic model.
+The first window is closest to the present and the last window is furthest in the past.
+We can see that population size appears to grown from the emergence the virus in the human population through 2009.
+
+We can have Tracer give a more detailed reconstruction of population history.
+
+**Select 'Bayesian Skyline Reconstruction...' from the 'Analysis' menu.**
+
+**Input pandemic_skyline.trees in the 'Trees Log File' dialog.**
+
+By default this will give population size going backwards from the present.
+We scale time more appropriately by setting the time of the most tip.
+
+**Input 2009.75 as 'Age of youngest tip'.**
+
+![tracer_skyline_dialog](images/tracer_skyline_dialog.png)
+
+**Click on 'OK' to run the analysis.**
+
+This will open a window with the following result:
+
+![tracer_skyline_history](images/tracer_skyline_history.png)
+
+This shows population size through time as inferred by the skyline demographic model.
+It appears that population size initially grew rapidly, but slowed as the year progressed.
+
 ## Prepare a logistic growth analysis
 
 We saw that the skyline analysis suggested that virus population size started off very small near the beginning of 2009 and increased throughout the year, though slowing down closer to Sep 2009.
@@ -292,15 +353,15 @@ A parametric model of [logistic growth](http://en.wikipedia.org/wiki/Logistic_fu
 In this model, exponential growth occurs with rate *r*, but is damped as the population size *N* approaches carrying-capicity *K*.
 The instantaneous rate of change in population size is:
 
-![logistic_rate](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/logistic_rate.png)
+![logistic_rate](images/logistic_rate.png)
 
 If we start with some initial population size *N*<sub>0</sub> then we can solve for *N* at an arbitrary timepoint *t*:
 
-![logistic_n0](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/logistic_n0.png)
+![logistic_n0](images/logistic_n0.png)
 
 However, because TMRCA is constantly varying over the course of the MCMC, BEAST parameterizes logistic growth not in terms of *N*<sub>0</sub>, but instead in terms of *t*<sub>50</sub>, that is the time back from the "present" (in this case 2009.75) when the population is at half its carrying capacity:
 
-![logistic_t50](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/logistic_t50.png)
+![logistic_t50](images/logistic_t50.png)
 
 Thus, to model logistic growth, we need to estimate *r*, *K* and *t*<sub>50</sub>.
 
@@ -311,11 +372,11 @@ Here, start by importing sequence data in the 'Partitions' panel, adding tip dat
 
 This will setup a demographic function based on the above outlined logistic growth model.
 
-![beauti_trees_logistic](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_trees_logistic.png)
+![beauti_trees_logistic](images/beauti_trees_logistic.png)
 
 **Select the 'Priors' panel and choose a Uniform(0,1) prior for 'clock.rate'.**
 
-![beauti_priors_logistic](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_priors_logistic.png)
+![beauti_priors_logistic](images/beauti_priors_logistic.png)
 
 The use of a Gamma prior for 'logistic.t50' is rather strange and exists as a holdover from a previous parameterization using a shape parameter to define timescale rather than 'logistic.t50'.
 We'll fix this by editing the raw XML later.
@@ -324,7 +385,7 @@ We'll fix this by editing the raw XML later.
 
 This will log parameters and trees to `pandemic_logistic.log` and `pandemic_logistic.trees`.
 
-![beauti_mcmc_logistic](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_mcmc_logistic.png)
+![beauti_mcmc_logistic](images/beauti_mcmc_logistic.png)
 
 **Save the XML file as pandemic_logistic.xml.**
 
@@ -377,13 +438,13 @@ However, overall timescale still needs to be set.
 
 **Enter 2009.75 for 'Age of youngest tip'.**
 
-![tracer_logistic_dialog](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/tracer_logistic_dialog.png)
+![tracer_logistic_dialog](images/tracer_logistic_dialog.png)
 
 **Click on 'OK' to perform the analysis.**
 
 The resulting window shows the median estimate of population size through time, as well as its 95% credible interval.
 
-![tracer_logistic_history](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/tracer_logistic_history.png)
+![tracer_logistic_history](images/tracer_logistic_history.png)
 
 Here, we see that population size has grown exponentially until around July or August when it's begun to saturate.
 However, although the rate of initial exponential increase appears fairly well defined, there appears to be little certainty to the degree of recent saturation.
@@ -426,7 +487,7 @@ We next need to load the geographic metadata into BEAUti.
 
 **In the resulting dialog 'Create a new trait' named location.**
 
-![beauti_traits_create](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_traits_create.png)
+![beauti_traits_create](images/beauti_traits_create.png)
 
 Similar to tip dates, we will import trait values from taxon names.
 
@@ -434,11 +495,11 @@ Similar to tip dates, we will import trait values from taxon names.
 
 **Enter _ as the delimiter.**
 
-![beauti_traits_guess](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_traits_guess.png)
+![beauti_traits_guess](images/beauti_traits_guess.png)
 
 Doing so results in a discrete trait being accociated with each taxon.
 
-![beauti_traits](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_traits.png)
+![beauti_traits](images/beauti_traits.png)
 
 We next need to give a model for how each discrete location transitions to other locations.
 
@@ -454,7 +515,7 @@ BSSVS stands for Bayesian Stochastic Search Variable Selection.
 It adds an indicator variable for each pairwise transition rate that specifies whether the rate is on or off, i.e. at its estimated value or at 0.
 Including these indicators serve to decrease the effective number of rate parameters that need to be estimated and are helpful when trying to infer a sparse transition matrix.
 
-![beauti_sites_geo](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_sites_geo.png)
+![beauti_sites_geo](images/beauti_sites_geo.png)
 
 As with the sequence partition, we also need to include a model of how geographic transition rate relates to time.
 
@@ -472,7 +533,7 @@ In addition to reconstructing states at all ancestors, we are particularly inter
 
 **Select 'Reconstruct states' at 'Tree Root'.**
 
-![beauti_states_geo](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_states_geo.png)
+![beauti_states_geo](images/beauti_states_geo.png)
 
 As before, we need to include priors on parameters associated with the phylogeographic model.
 
@@ -484,7 +545,7 @@ We need to give a prior to the overall geographic transition rate.
 
 We will leave mean and initial value set to 1.0.
 
-![beauti_priors_exp](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beauti_priors_exp.png)
+![beauti_priors_exp](images/beauti_priors_exp.png)
 
 We will leave the proposals at their defaults.
 
@@ -506,7 +567,7 @@ This analysis (because of the function to infer ancestral locations) requires th
 
 Generally, I turn on SSE as this should give a decent speed increase and set the 'Rescaling scheme' to 'Dynamic'.
 
-![beast_geo](https://raw.github.com/trvrb/influenza-dynamics-practical/master/images/beast_geo.png)
+![beast_geo](images/beast_geo.png)
 
 **Click on 'Run'.**
 
