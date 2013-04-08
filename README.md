@@ -210,22 +210,22 @@ XML is structured in a hierarchical fashion with logical blocks of markup surrou
 **Find the XML block that specifies tree output called 'logTree'.**
 
 ```
-	<logTree id="treeFileLog" logEvery="25000" nexusFormat="true" fileName="pandemic_skyline.trees" sortTranslationTable="true">
-		<treeModel idref="treeModel"/>
-		<trait name="rate" tag="rate">
-			<strictClockBranchRates idref="branchRates"/>
-		</trait>
-		<posterior idref="posterior"/>
-	</logTree>
+<logTree id="treeFileLog" logEvery="25000" nexusFormat="true" fileName="pandemic_skyline.trees" sortTranslationTable="true">
+	<treeModel idref="treeModel"/>
+	<trait name="rate" tag="rate">
+		<strictClockBranchRates idref="branchRates"/>
+	</trait>
+	<posterior idref="posterior"/>
+</logTree>
 ```
 
 **Delete the 'trait' block that contains 'strictClockBranchRates'.**
 
 ```
-	<logTree id="treeFileLog" logEvery="25000" nexusFormat="true" fileName="pandemic_skyline.trees" sortTranslationTable="true">
-		<treeModel idref="treeModel"/>
-		<posterior idref="posterior"/>
-	</logTree>
+<logTree id="treeFileLog" logEvery="25000" nexusFormat="true" fileName="pandemic_skyline.trees" sortTranslationTable="true">
+	<treeModel idref="treeModel"/>
+	<posterior idref="posterior"/>
+</logTree>
 ```
 
 This fine-tuning of the XML can be quite helpful and there are quite a few more advanced analyses that require editing the XML rather than relying on BEAUti output.
@@ -429,9 +429,9 @@ This will log parameters and trees to `pandemic_logistic.log` and `pandemic_logi
 We will also manually set the prior on 'logistic.t50' by replacing the 'gammaPrior' with:
 
 ```
-	<uniformPrior lower="0.0" upper="1.0">
-		<parameter idref="logistic.t50"/>
-	</uniformPrior>	
+<uniformPrior lower="0.0" upper="1.0">
+	<parameter idref="logistic.t50"/>
+</uniformPrior>	
 ```
 
 With this completed, we are ready to run this analysis in BEAST.
@@ -596,9 +596,9 @@ It will be helpful to edit the XML to give more interpretable logging.
 **Replace the gammaPrior with a uniform prior for 'logistic.t50' as before.**
 
 ```
-	<uniformPrior lower="0.0" upper="1.0">
-		<parameter idref="logistic.t50"/>
-	</uniformPrior>	
+<uniformPrior lower="0.0" upper="1.0">
+	<parameter idref="logistic.t50"/>
+</uniformPrior>	
 ```
 
 Replace the file name `pandemic_geo.location.rates.log` with `pandemic_geo.rates`.
@@ -606,9 +606,9 @@ Replace the output in 'pandemic_geo.locationrateMatrixLog' with more interpretab
 These are stored in 'location.actualRates'.
 
 ```
-		<log id="pandemic_geo.locationrateMatrixLog" logEvery="25000" fileName="pandemic_geo.rates">
-			<statistic idref="location.actualRates"/>
-		</log>
+<log id="pandemic_geo.locationrateMatrixLog" logEvery="25000" fileName="pandemic_geo.rates">
+	<statistic idref="location.actualRates"/>
+</log>
 ```
 
 Also, replace the file name `location.states.log` with `pandemic_geo.root`.
@@ -687,17 +687,17 @@ Here, we see the following distribution:
 
                | Frequency
 ---            | ---
-Africa         | XX
-CentralAmerica | XX
-CentralAsia    | XX
-China          | XX
-Europe         | XX
-JapanKorea     | XX
-Mexico         | XX
-USACanada      | XX
-Oceania        | XX
-SouthAmerica   | XX
-SoutheastAsia  | XX
+Africa         | 0%
+CentralAmerica | 4%
+CentralAsia    | 0%
+China          | 3%
+Europe         | 3%
+JapanKorea     | 1%
+Mexico         | 64%
+USACanada      | 22%
+Oceania        | 0%
+SouthAmerica   | 2%
+SoutheastAsia  | 1%
 
 In addition, the phylogeographic reconstruction can be visualized as a spread across the globe, in a map-centric fashion, rather than the previous tree-centric visualization.
 To do this, we will run a small script on the MCC tree that will create a KML file that can be viewed in Google Earth.
@@ -714,9 +714,9 @@ java -jar ../scripts/phylogeo.jar -coordinates ../data/locs.txt -annotation loca
 This specifies the `locs.txt` coordinates file, that the geographic character state is called `location`, that the most recent tip is at `2009.75` and that the MCC tree is the file `pandemic_geo.mcc`.
 Running this script generates the file `pandemic_geo.kml`, which I've included in the `output/` directory.
 
-**Open Google Earth and open the pandemic_geo.kml file.**
+**Open Google Earth and open the `pandemic_geo.kml` file.**
 
-This will display well-supported transitions on the globe and include their date of occurence.
+This will display well-supported transitions on the globe and includes their date of occurence.
 
 ![google_earth](images/google_earth.png)
 
