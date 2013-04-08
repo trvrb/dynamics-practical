@@ -10,7 +10,7 @@ Here, we will investigate the growth of the virus population and its global spre
 
 * [BEAST](http://beast.bio.ed.ac.uk/) is used to infer evolutionary dynamics from sequence data.
 * [BEAGLE](http://beast.bio.ed.ac.uk/BEAGLE) is a helper library that allows faster and more advanced functions to be run in BEAST. For this practical, it is not necessary to install CUDA drivers (step 2 in the BEAGLE installation).
-* [Tracer](http://tree.bio.ed.ac.uk/software/tracer/) is used to analyze paramater estimates from BEAST.
+* [Tracer](http://tree.bio.ed.ac.uk/software/tracer/) is used to analyze parameter estimates from BEAST.
 * [FigTree](http://tree.bio.ed.ac.uk/software/figtree/) is used to analyze phylogeny estimates from BEAST.
 * [Google Earth](http://www.google.com/earth/) is used to display phylogeographic reconstructions.
 
@@ -20,12 +20,13 @@ Here, we will investigate the growth of the virus population and its global spre
 2. [Prepare a skyline analysis](#prepare-a-skyline-analysis)
 3. [Run the skyline analysis](#run-the-skyline-analysis)
 4. [Examine the skyline output](#examine-the-skyline-output)
-5. [Prepare a logistic growth analysis](#prepare-a-logistic-growth-analysis)
-6. [Run the logistic growth analysis](#run-the-logistic-growth-analysis)
-7. [Examine the logistic growth output](#examine-the-logistic-growth-output)
-8. [Prepare a phylogeographic analysis](#prepare-a-phylogeographic-analysis)
-9. [Run the phylogeographic analysis](#run-the-phylogeographic-analysis)
-10. [Examine the phylogeographic output](#examine-the-phylogeographic-output)
+5. [Examine the skyline tree](#examine-the-skyline-tree)
+6. [Prepare a logistic growth analysis](#prepare-a-logistic-growth-analysis)
+7. [Run the logistic growth analysis](#run-the-logistic-growth-analysis)
+8. [Examine the logistic growth output](#examine-the-logistic-growth-output)
+9. [Prepare a phylogeographic analysis](#prepare-a-phylogeographic-analysis)
+10. [Run the phylogeographic analysis](#run-the-phylogeographic-analysis)
+11. [Examine the phylogeographic output](#examine-the-phylogeographic-output)
 
 ## Compile sequence data
 
@@ -118,7 +119,7 @@ We default to a strict molecular clock in which sequence substitution occur at s
 
 ![beauti_clocks](images/beauti_clocks.png)
 
-Next, we need to specify a model that describes phylogenetic structure based on some underlying demographic processs.
+Next, we need to specify a model that describes phylogenetic structure based on some underlying demographic process.
 
 **Select the 'Trees' panel.**
 
@@ -151,7 +152,7 @@ However, we are forced to choose a prior for evolutionary rate.
 **Click on the prior for 'clock.rate' (currently highlighted in red).**
 
 Although including improper priors will not harm parameter estimates, it will adversely impact the ability to do model comparison, and so it is not recommended.
-Here, we still keep a unformative prior on 'clock.rate', choosing uniform between 0 and 1.
+Here, we still keep a uninformative prior on 'clock.rate', choosing uniform between 0 and 1.
 
 **Select 'Uniform' from the 'Prior Distribution' dropdown.**
 
@@ -242,7 +243,7 @@ This XML file contains all the information that BEAST requires.
 
 **Click on 'Choose File...' and select 'pandemic_skyline.xml'.**
 
-By default, BEAST will have 'Allow overwriting of log files' turned off, so that you can't accidently overwrite a previous run's output.
+By default, BEAST will have 'Allow overwriting of log files' turned off, so that you can't accidentally overwrite a previous run's output.
 However, you'll often need to check this box to allow overwriting when there are previous log files in the same directory that should be overwritten.
 
 ![beast_skyline](images/beast_skyline.png)
@@ -261,7 +262,7 @@ These two parameters often give a good idea of whether the MCMC appears to be be
 Additionally, the files `pandemic_skyline.log` and `pandemic_skyline.trees` will start to fill with MCMC samples.
 
 Unfortunately, BEAST runs can take quite a long time, and it's not always clear how long they need to run.
-Because of these time requirements, I almost never run BEAST analyses locally, prefering instead to get the XML up and running and tested locally and then running BEAST on a cluster node to perform the full analysis.
+Because of these time requirements, I almost never run BEAST analyses locally, preferring instead to get the XML up and running and tested locally and then running BEAST on a cluster node to perform the full analysis.
 In this case, it took a single cluster node 16 hours to compute the 50 million MCMC steps, resulting in 2001 samples being logged and a 48 MB trees file.
 
 I've included the resulting log file and tree file in the practical as `output/pandemic_skyline.log` and `output/pandemic_skyline.trees`.
@@ -311,7 +312,7 @@ These estimates correspond to the following calendar dates:
 TMRCA | 24 Dec 2008 | 14 Feb 2009 | 22 March 2009
 
 Because [autocorrelation](http://en.wikipedia.org/wiki/Autocorrelation) exists been samples across the MCMC chain, our estimates of means and credible intervals have more variance than would be expected from the 1600 MCMC samples.
-This inflation of variance can be estimated based on the effective sample size (ESS), which gives the number of independ samples that would give the same variance as the observed autocorrelated samples.
+This inflation of variance can be estimated based on the effective sample size (ESS), which gives the number of independent samples that would give the same variance as the observed autocorrelated samples.
 
 In this case, we can see that some parameters have very little autocorrelation, for instance, kappa with an ESS of 1489.
 However, TMRCA has substantial autocorrelation (it's difficult to adjust without adjusting parameters in the MCMC), giving it an ESS of 87.
@@ -347,11 +348,47 @@ This will open a window with the following result:
 This shows population size through time as inferred by the skyline demographic model.
 It appears that population size initially grew rapidly, but slowed as the year progressed.
 
+## Examine the skyline tree
+
+Here, we will use FigTree to display the phylogeny from the skyline analysis.
+However, first will will want to condense the posterior sample of 1600 trees to something more manageable.
+For this, we will use the helper program TreeAnnotator that is distributed alongside BEAST.
+
+**Open TreeAnnotator.**
+
+Rather frustratingly, some BEAST programs use the minimum state number as burn-in, while others take a count of states to throw away.
+TreeAnnotator takes the latter.
+
+**To burn-in the first 10 million states, enter 400 for 'Burnin'.**
+
+**Enter pandemic_skyline.trees as 'Input Tree File' and enter pandemic_skyline.mcc as 'Output file'.**
+
+![treeannotator_skyline](images/treeannotator_skyline.png)
+
+This will print out a single maximum clade credibility (MCC) tree to the file `pandemic_skyline.mcc`.
+For convenience, I've included this file as `output/pandemic_skyline.mcc`.
+
+We can now open this MCC tree in FigTree.
+
+**Open FigTree, select 'Open...' from the 'File' menu and choose the file pandemic_skyline.mcc.**
+
+This displays the tree with each taxon labeled.
+We can get a better idea of the structure of the phylogeny with just a bit of tree manipulation.
+
+**Turn off 'Tip Labels' in the left-hand list.**
+
+**Under 'Trees', turn on 'Order nodes' and choose 'decreasing'.**
+
+![figtree_skyline](images/figtree_skyline.png)
+
+A pattern of population expansion is visible in the phylogeny as rapid coalescence in early 2009 and slower coalescence later in 2009.
+Standing genetic diversity increases through time.
+
 ## Prepare a logistic growth analysis
 
 We saw that the skyline analysis suggested that virus population size started off very small near the beginning of 2009 and increased throughout the year, though slowing down closer to Sep 2009.
 A parametric model of [logistic growth](http://en.wikipedia.org/wiki/Logistic_function#In_ecology:_modeling_population_growth) fits this pattern nicely.
-In this model, exponential growth occurs with rate *r*, but is damped as the population size *N* approaches carrying-capicity *K*.
+In this model, exponential growth occurs with rate *r*, but is damped as the population size *N* approaches carrying-capacity *K*.
 The instantaneous rate of change in population size is:
 
 ![logistic_rate](images/logistic_rate.png)
@@ -450,14 +487,14 @@ The resulting window shows the median estimate of population size through time, 
 Here, we see that population size has grown exponentially until around July or August when it's begun to saturate.
 However, although the rate of initial exponential increase appears fairly well defined, there appears to be little certainty to the degree of recent saturation.
 
-The equation log(2) / *r* can be used to calculcate the doubling time in years of virus population.
-The doubling time in days can be calculcated by multiplying this by 365.
+The equation log(2) / *r* can be used to calculate the doubling time in years of virus population.
+The doubling time in days can be calculated by multiplying this by 365.
 
                      | Lower | Mean  | Upper
 ---                  | ---   | ---   | ----
 Doubling time (days) | 17.48 | 23.78 | 38.04
 
-Additionally, with knowledge of the serial interval between infections we can convert the growth rate in terms of years into an estimate of the fundemental reproductive number *R*<sub>0</sub>.
+Additionally, with knowledge of the serial interval between infections we can convert the growth rate in terms of years into an estimate of the fundamental reproductive number *R*<sub>0</sub>.
 If we convert growth rate *r* into days, we get a mean estimate of 0.029 per day.
 From basic [SIR dynamics](http://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology) we expect the per day rate of increase to be equal to the per-day contact rate *&beta;* minus the per day recovery rate *&gamma;*.
 Thus, we can solve for *&beta;* = *r* + *&gamma;*.
@@ -498,7 +535,7 @@ Similar to tip dates, we will import trait values from taxon names.
 
 ![beauti_traits_guess](images/beauti_traits_guess.png)
 
-Doing so results in a discrete trait being accociated with each taxon.
+Doing so results in a discrete trait being associated with each taxon.
 
 ![beauti_traits](images/beauti_traits.png)
 
@@ -507,7 +544,7 @@ We next need to give a model for how each discrete location transitions to other
 **Select the 'Sites' panel and click on 'location' in the left-hand list of data partitions.**
 
 We will use a 'Symmetric substitution model' where the rate that A goes to B equals the rate that B goes to A.
-Although the assymemtric model seems like it should better match reality, using it adds significant parameter complexity and additionally sacrifices a fair degree of robustness to sampling particulars.
+Although the asymmetric model seems like it should better match reality, using it adds significant parameter complexity and additionally sacrifices a fair degree of robustness to sampling particulars.
 
 **Select 'Infer social network with BSSVS'.**
 
@@ -622,7 +659,7 @@ The MCMC samples of pairwise rates are stored in `pandemic_geo.rates`.
 
 Looking at individual rate estimates, some are almost always off (indicator = 0) and have mean estimates near 0, while others are most often on (indicator = 1) and have mean estimates greater than 0.
 
-Unfortuantely, the format of these rates is not immediately obvious.
+Unfortunately, the format of these rates is not immediately obvious.
 The rate matrix is converted to a vector in the following fashion (using a symmetric 4x4 matrix to demonstrate):
 
   A             | B              | C             | D
@@ -633,56 +670,3 @@ C r<sub>2</sub> | r<sub>4</sub>  | -             | r<sub>6</sub>
 D r<sub>3</sub> | r<sub>5</sub>  | r<sub>6</sub> | -
 
 A symmetric 4x4 matrix has 6 rates to estimate.
-
-In our case, we can find the ordering of locations in the `pandemic_geo.xml` file in the 'generalDataType' block.
-This is:
-
-1. Africa
-2. CentralAmerica
-3. CentralAsia
-4. China
-5. Europe
-6. JapanKorea
-7. Mexico
-8. USACanada
-9. Oceania
-10. SouthAmerica
-11. SoutheastAsia
-
-Thus, rate 1 is Africa to/from CentralAmerica, etc...
-
-```
-	rates <- read.table("pandemic_geo.rates", header=TRUE, skip=2) # import table     
-	rates <- subset(rates, state>10000000)                         # burnin
-	rates <- subset(rates, select= -state)                         # remove states column
-	means <- sapply(rates, function(x) mean(as.numeric(x)) )       # calculate means
-
-	names <- c("Africa","CentralAmerica","CentralAsia","China","Europe","JapanKorea","Mexico","USACanada","Oceania","SouthAmerica","SoutheastAsia")
-	n <- 11
-
-	pairs <- c()
-	for (i in 1:n) {
-		if (i < n) {
-			for (j in (i+1):n) {
-				pair <- paste(names[i], names[j], sep="_")
-				pairs <- append(pairs, pair)
-			}
-		}
-	}
-	
-	edges <- NULL;
-	k <- 1
-	for (i in 1:n) {
-		if (i < n) {
-			for (j in (i+1):n) {
-				row <- c(names[i], names[j], as.numeric(means[k]))
-				rbind(edges,row) -> edges
-				k <- k+1
-			}
-		}
-	}	
-	
-	
-	install.packages("qgraph")
-	
-```
