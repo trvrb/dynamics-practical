@@ -15,7 +15,7 @@ Here, we will investigate the growth of the virus population and its global spre
 
 ## Sections
 
-1. [Compile sequence data](practical/section_1.md)
+1. [Compile sequence data](#compile-sequence-data)
 
 ## Compile sequence data
 
