@@ -688,12 +688,12 @@ Here, we see the following distribution:
                | Frequency
 ---            | ---
 Africa         | 0%
-CentralAmerica | 4%
+CentralAmerica | 5%
 CentralAsia    | 0%
 China          | 3%
 Europe         | 3%
 JapanKorea     | 1%
-Mexico         | 64%
+Mexico         | 63%
 USACanada      | 22%
 Oceania        | 0%
 SouthAmerica   | 2%
