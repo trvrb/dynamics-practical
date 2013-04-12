@@ -5,6 +5,8 @@
 In 2009, a [variant of influenza H1N1](http://en.wikipedia.org/wiki/Pandemic_H1N1/09_virus) emerged through reassortment of bird, swine and human flu viruses, with surface proteins HA and NA of swine origin.
 Owing to a lack of previous immunity to these proteins, this virus spread rapidly through the human population, causing a worldwide [pandemic](http://en.wikipedia.org/wiki/2009_flu_pandemic).
 Here, we will investigate the growth of the virus population and its global spread using publicly available sequence data.
+This tutorial walks through how to use [BEAST](http://beast.bio.ed.ac.uk/) and associated software to infer spatiotemporal dynamics from viral sequence data.
+Accompanying slides on the theory behind this analysis are available in [theory/slides.pdf](theory/slides.pdf).
 
 ## Required software
 
