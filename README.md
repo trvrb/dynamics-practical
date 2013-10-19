@@ -209,7 +209,7 @@ XML is structured in a hierarchical fashion with logical blocks of markup surrou
 
 **Find the XML block that specifies tree output called 'logTree'.**
 
-```
+```xml
 <logTree id="treeFileLog" logEvery="25000" nexusFormat="true" fileName="pandemic_skyline.trees" sortTranslationTable="true">
 	<treeModel idref="treeModel"/>
 	<trait name="rate" tag="rate">
@@ -221,7 +221,7 @@ XML is structured in a hierarchical fashion with logical blocks of markup surrou
 
 **Delete the 'trait' block that contains 'strictClockBranchRates'.**
 
-```
+```xml
 <logTree id="treeFileLog" logEvery="25000" nexusFormat="true" fileName="pandemic_skyline.trees" sortTranslationTable="true">
 	<treeModel idref="treeModel"/>
 	<posterior idref="posterior"/>
@@ -428,7 +428,7 @@ This will log parameters and trees to `pandemic_logistic.log` and `pandemic_logi
 
 We will also manually set the prior on 'logistic.t50' by replacing the 'gammaPrior' with:
 
-```
+```xml
 <uniformPrior lower="0.0" upper="1.0">
 	<parameter idref="logistic.t50"/>
 </uniformPrior>	
@@ -595,7 +595,7 @@ It will be helpful to edit the XML to give more interpretable logging.
 
 **Replace the gammaPrior with a uniform prior for 'logistic.t50' as before.**
 
-```
+```xml
 <uniformPrior lower="0.0" upper="1.0">
 	<parameter idref="logistic.t50"/>
 </uniformPrior>	
@@ -605,7 +605,7 @@ Replace the file name `pandemic_geo.location.rates.log` with `pandemic_geo.rates
 Replace the output in 'pandemic_geo.locationrateMatrixLog' with more interpretable estimates of indicators multiplied by rate values.
 These are stored in 'location.actualRates'.
 
-```
+```xml
 <log id="pandemic_geo.locationrateMatrixLog" logEvery="25000" fileName="pandemic_geo.rates">
 	<statistic idref="location.actualRates"/>
 </log>
