@@ -1,7 +1,3 @@
-# Inferring spatiotemporal dynamics of the H1N1 influenza pandemic from sequence data
-
-Test 5...
-
 ## Introduction
 
 In 2009, a [variant of influenza H1N1](http://en.wikipedia.org/wiki/Pandemic_H1N1/09_virus) emerged through reassortment of bird, swine and human flu viruses, with surface proteins HA and NA of swine origin.
