@@ -79,3 +79,7 @@ This will open a window with the following result:
 
 This shows population size through time as inferred by the skyline demographic model.
 It appears that population size initially grew rapidly, but slowed as the year progressed.
+
+### Next section
+
+* [Examine the skyline tree](05-examine-the-skyline-tree.md)

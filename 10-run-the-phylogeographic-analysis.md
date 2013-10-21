@@ -16,3 +16,7 @@ This will produce the output files `pandemic_geo.log`, `pandemic_geo.rates`, `pa
 This analysis took ~24 hours to complete on a single cluster node.
 
 I've included these files with the practical in the `output/` directory.
+
+### Next section
+
+* [Examine the phylogeographic output](11-examine-the-phylogeographic-output.md)

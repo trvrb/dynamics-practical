@@ -29,3 +29,7 @@ Because of these time requirements, I almost never run BEAST analyses locally, p
 In this case, it took a single cluster node 16 hours to compute the 50 million MCMC steps, resulting in 2001 samples being logged and a 48 MB trees file.
 
 I've included the resulting log file and tree file in the practical as `output/pandemic_skyline.log` and `output/pandemic_skyline.trees`.
+
+### Next section
+
+* [Examine the skyline output](04-examine-the-skyline-output.md)

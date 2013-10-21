@@ -33,3 +33,7 @@ We can get a better idea of the structure of the phylogeny with a bit of tree ma
 
 A pattern of population expansion is visible in the phylogeny as rapid coalescence in early 2009 and slower coalescence later in 2009.
 Standing genetic diversity increases through time.
+
+### Next section
+
+* [Prepare a logistic growth analysis](06-prepare-a-logistic-growth-analysis.md)

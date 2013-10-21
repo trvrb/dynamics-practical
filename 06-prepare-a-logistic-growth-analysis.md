@@ -51,3 +51,7 @@ We will also manually set the prior on 'logistic.t50' by replacing the 'gammaPri
 ```
 
 With this completed, we are ready to run this analysis in BEAST.
+
+### Next section
+
+* [Run the logistic growth analysis](07-run-the-logistic-growth-analysis.md)

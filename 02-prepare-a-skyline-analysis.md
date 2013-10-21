@@ -178,3 +178,7 @@ XML is structured in a hierarchical fashion with logical blocks of markup surrou
 This fine-tuning of the XML can be quite helpful and there are quite a few more advanced analyses that require editing the XML rather than relying on BEAUti output.
 
 I've included this XML with the practical as `xml/pandemic_skyline.xml`.
+
+### Next section
+
+* [Run the skyline analysis](03-run-the-skyline-analysis.md)

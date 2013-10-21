@@ -101,3 +101,7 @@ These are stored in 'location.actualRates'.
 Also, replace the file name `location.states.log` with `pandemic_geo.root`.
 
 I've included this file with the practical as `pandemic_geo.xml`
+
+### Next section
+
+* [Run the phylogeographic analysis](10-run-the-phylogeographic-analysis.md)

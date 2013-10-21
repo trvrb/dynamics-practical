@@ -64,3 +64,7 @@ At the same time, the skyline model estimates a similar number of individuals.
 Differences between census population size *N* and effective population size *N*<sub>e</sub> can be quite large, and can be generally explained by a large variance in the reproductive success of individual infections.
 If the progeny of some infections are much more successful than the progeny of other infections in terms of eventual genetic legacy, there will be a large difference between *N* and *N*<sub>e</sub>.
 This variance could arise from a variety of sources, including super-spreading, spatial effects and natural selection.
+
+### Next section
+
+* [Prepare a phylogeographic analysis](09-prepare-a-phylogeographic-analysis.md)
