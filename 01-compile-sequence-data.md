@@ -21,4 +21,4 @@ Metadata about location and date of sampling can be kept as separate tab-delimit
 I then used [MUSCLE](http://www.drive5.com/muscle/) to align each set of sequences and trimmed the ends of alignments to remove uncertain sites.
 I've included the final aligned dataset as `data/pandemic.fasta`.
 
-* (Next section)[02-prepare-a-skyline-analysis.md]
+* [Next section](02-prepare-a-skyline-analysis.md)
