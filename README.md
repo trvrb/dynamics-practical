@@ -14,7 +14,7 @@ Accompanying slides on the theory behind this analysis are available in [theory/
 * [FigTree](http://tree.bio.ed.ac.uk/software/figtree/) is used to analyze phylogeny estimates from BEAST.
 * [Google Earth](http://www.google.com/earth/) is used to display phylogeographic reconstructions.
 
-## Sections
+## Contents
 
 1. [Compile sequence data](01-compile-sequence-data.md)
 2. [Prepare a skyline analysis](02-prepare-a-skyline-analysis.md)
@@ -28,3 +28,6 @@ Accompanying slides on the theory behind this analysis are available in [theory/
 10. [Run the phylogeographic analysis](10-run-the-phylogeographic-analysis.md)
 11. [Examine the phylogeographic output](11-examine-the-phylogeographic-output.md)
 
+### Next section
+
+* [Compile sequence data](01-compile-sequence-data.md)
