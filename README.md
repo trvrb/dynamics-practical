@@ -16,18 +16,18 @@ Accompanying slides on the theory behind this analysis are available in [theory/
 
 ## Contents
 
-1. [Compile sequence data](01-compile-sequence-data.md)
-2. [Prepare a skyline analysis](02-prepare-a-skyline-analysis.md)
-3. [Run the skyline analysis](03-run-the-skyline-analysis.md)
-4. [Examine the skyline output](04-examine-the-skyline-output.md)
-5. [Examine the skyline tree](05-examine-the-skyline-tree.md)
-6. [Prepare a logistic growth analysis](06-prepare-a-logistic-growth-analysis.md)
-7. [Run the logistic growth analysis](07-run-the-logistic-growth-analysis.md)
-8. [Examine the logistic growth output](08-examine-the-logistic-growth-output.md)
-9. [Prepare a phylogeographic analysis](09-prepare-a-phylogeographic-analysis.md)
-10. [Run the phylogeographic analysis](10-run-the-phylogeographic-analysis.md)
-11. [Examine the phylogeographic output](11-examine-the-phylogeographic-output.md)
+1. [Compile sequence data](compile-sequence-data.md)
+2. [Prepare a skyline analysis](prepare-a-skyline-analysis.md)
+3. [Run the skyline analysis](run-the-skyline-analysis.md)
+4. [Examine the skyline output](examine-the-skyline-output.md)
+5. [Examine the skyline tree](examine-the-skyline-tree.md)
+6. [Prepare a logistic growth analysis](prepare-a-logistic-growth-analysis.md)
+7. [Run the logistic growth analysis](run-the-logistic-growth-analysis.md)
+8. [Examine the logistic growth output](examine-the-logistic-growth-output.md)
+9. [Prepare a phylogeographic analysis](prepare-a-phylogeographic-analysis.md)
+10. [Run the phylogeographic analysis](run-the-phylogeographic-analysis.md)
+11. [Examine the phylogeographic output](examine-the-phylogeographic-output.md)
 
 ### Next section
 
-* [Compile sequence data](01-compile-sequence-data.md)
+* [Compile sequence data](compile-sequence-data.md)

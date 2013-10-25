@@ -82,4 +82,4 @@ It appears that population size initially grew rapidly, but slowed as the year p
 
 ### Next section
 
-* [Examine the skyline tree](05-examine-the-skyline-tree.md)
+* [Examine the skyline tree](examine-the-skyline-tree.md)

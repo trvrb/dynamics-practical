@@ -23,4 +23,4 @@ I've included the final aligned dataset as `data/pandemic.fasta`.
 
 ### Next section
 
-* [Prepare a skyline analysis](02-prepare-a-skyline-analysis.md)
+* [Prepare a skyline analysis](prepare-a-skyline-analysis.md)

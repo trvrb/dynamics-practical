@@ -54,4 +54,4 @@ With this completed, we are ready to run this analysis in BEAST.
 
 ### Next section
 
-* [Run the logistic growth analysis](07-run-the-logistic-growth-analysis.md)
+* [Run the logistic growth analysis](run-the-logistic-growth-analysis.md)

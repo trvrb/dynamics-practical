@@ -67,4 +67,4 @@ This variance could arise from a variety of sources, including super-spreading, 
 
 ### Next section
 
-* [Prepare a phylogeographic analysis](09-prepare-a-phylogeographic-analysis.md)
+* [Prepare a phylogeographic analysis](prepare-a-phylogeographic-analysis.md)

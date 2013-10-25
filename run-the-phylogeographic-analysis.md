@@ -19,4 +19,4 @@ I've included these files with the practical in the `output/` directory.
 
 ### Next section
 
-* [Examine the phylogeographic output](11-examine-the-phylogeographic-output.md)
+* [Examine the phylogeographic output](examine-the-phylogeographic-output.md)

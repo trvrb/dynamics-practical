@@ -104,4 +104,4 @@ I've included this file with the practical as `pandemic_geo.xml`
 
 ### Next section
 
-* [Run the phylogeographic analysis](10-run-the-phylogeographic-analysis.md)
+* [Run the phylogeographic analysis](run-the-phylogeographic-analysis.md)

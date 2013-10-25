@@ -36,4 +36,4 @@ Standing genetic diversity increases through time.
 
 ### Next section
 
-* [Prepare a logistic growth analysis](06-prepare-a-logistic-growth-analysis.md)
+* [Prepare a logistic growth analysis](prepare-a-logistic-growth-analysis.md)

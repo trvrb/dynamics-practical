@@ -8,4 +8,4 @@ I've included these files with the practical as `output/pandemic_logistic.log` a
 
 ### Next section
 
-* [Examine the logistic growth output](08-examine-the-logistic-growth-output.md)
+* [Examine the logistic growth output](examine-the-logistic-growth-output.md)

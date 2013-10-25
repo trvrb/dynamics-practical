@@ -32,4 +32,4 @@ I've included the resulting log file and tree file in the practical as `output/p
 
 ### Next section
 
-* [Examine the skyline output](04-examine-the-skyline-output.md)
+* [Examine the skyline output](examine-the-skyline-output.md)

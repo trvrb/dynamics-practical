@@ -181,4 +181,4 @@ I've included this XML with the practical as `xml/pandemic_skyline.xml`.
 
 ### Next section
 
-* [Run the skyline analysis](03-run-the-skyline-analysis.md)
+* [Run the skyline analysis](run-the-skyline-analysis.md)
