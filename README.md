@@ -30,4 +30,4 @@ Accompanying slides on the theory behind this analysis are available in [theory/
 
 ### Next section
 
-* [[Compile sequence data]]
+* [Compile sequence data](compile-sequence-data.md)
